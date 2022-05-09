@@ -179,7 +179,6 @@
                     { field: 'approved', title: 'Одобрение', sortable: false},
                     { title: '', field: '', width: 35, type: 'icon', icon: 'glyphicon-plus', tooltip: 'Одобрение', events: { 'click': Dob} },
                     { title: '', field: '', width: 35, type: 'icon', icon: 'glyphicon-minus', tooltip: 'Отклонение', events: { 'click': Del } }
-                  
                 ],
                 dataSource: '/reg_cars/',
                 sort: true,

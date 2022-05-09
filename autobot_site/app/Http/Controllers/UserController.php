@@ -22,7 +22,8 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $paginateNumber = $request->input('limit') ?? 5;
+        $controller = new UserController();
+        $paginateNumber = $request->input('limit') ?? json_decode($controller->getUsersCount()->content())->count;
         
         $paginate = DB::table('users')
         ->join('addresses', 'addresses.id_address', '=', 'users.id_address')
@@ -34,6 +35,12 @@ class UserController extends Controller
         }
         if(!empty($request->input("email"))) {
             $paginate = $paginate->where("email", "like", '%' . $request->input("email") . '%');
+        }
+        if(!empty($request->input("approved"))) {
+            $paginate = $paginate->where("approved", "like", '%' . $request->input("approved") . '%');
+        }
+        if(!empty($request->input("name_role"))) {
+            $paginate = $paginate->where("name_role", "like", '%' . $request->input("name_role") . '%');
         }
         
         $paginate = $paginate->paginate($paginateNumber);

@@ -50,10 +50,13 @@
 
                 <table class="grid1" id="grid2"></table>
 
+                <input value = "+ *" type="button" id="btnUpdateUsers1" class="btn btn-default"/>
                 <div class="text4">
+                    
                     <p>ЗАЯВКИ НА ВЪЕЗД</p>
+                    
                 </div>
-
+                
                 <table class="grid3" id="grid4"></table>
             </form>
 
@@ -239,6 +242,33 @@
                     });
                 }
             }
+
+            let timerId1 = setInterval(() => {
+
+            var xhr1 = new XMLHttpRequest()
+            xhr1.open('GET', 'reg_cars/getCount', true)
+            xhr1.send()
+
+            xhr1.onreadystatechange = function() {
+                if (xhr1.readyState != 4) {
+                    return
+            }
+
+            var UsersCount1 = JSON.parse(xhr1.responseText)   
+            var newUsersCount1 = UsersCount1.count - grid.count(true)
+            $('#btnUpdateUsers1').val("+" + newUsersCount1)
+            if (xhr1.status === 200) {
+                    console.log('result', xhr1.responseText)
+                } else {
+                    console.log('err', xhr1.responseText)
+                }
+            }            
+            }, 2000);
+
+            $('#btnUpdateUsers1').on('click', function () {
+                grid.reload();
+            });
+
             $(document).ready(function () {
                 grid = $('#grid4').grid({
                     dataSource: '/reg_cars/',

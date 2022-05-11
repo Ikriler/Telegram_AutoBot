@@ -7,6 +7,8 @@ $we='';
 $num='' ;
 
 
+
+
 class DB
 {
     // Объект класса PDO
@@ -14,7 +16,6 @@ class DB
     // Соединение с БД
     public function __construct()
     {
-
         $this->db = new PDO('mysql:host=' . HOST. ';dbname=' . DB, USER,PASS );
     }
     // Операции над БД

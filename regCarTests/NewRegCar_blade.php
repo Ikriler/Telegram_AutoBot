@@ -6,6 +6,7 @@ define('DB', 'autobot_laravel');
 $we='';
 $num='' ;
 
+
 class DB
 {
     // Объект класса PDO

@@ -3,6 +3,8 @@ define('HOST', 'localhost');
 define('USER', 'root');
 define('PASS', '');
 define('DB', 'autobot_laravel');
+$we='';
+$num='' ;
 
 class DB
 {
@@ -39,7 +41,7 @@ class DB
     }
 
 }
-
+$params = [ ];
 // class DB {...} 
 	// Создаём объект
 	$db = new DB;
@@ -60,6 +62,7 @@ if( isset($_GET['id'] ) AND isset($_GET['dob'] ) ){ $id=$_GET['id'] ;
     
     $params = [ 'approved' => 1 ];
    $reg= $db->query('UPDATE  `reg_cars` SET  approved = :approved WHERE id_reg_car='.$id.'  ', $params);
+   $params=[];
    
 }
 
@@ -67,6 +70,7 @@ if( isset($_GET['id'] ) AND isset($_GET['del'] ) ){ $id=$_GET['id'] ;
     
     $params = [ 'approved' => 2 ];
    $ger= $db->query('UPDATE  `reg_cars` SET  approved = :approved WHERE id_reg_car='.$id.'  ', $params);
+   $params=[];
    
 }
 
@@ -81,13 +85,36 @@ if( isset($_GET['id'] ) AND isset($_GET['Save'] ) ){ $id=$_GET['id'] ;
         'owner' => $_GET['owner'],
 ];
    $sav= $db->query('UPDATE  reg_cars r  SET  num_car = :num_car, model= :model, add_info=:add_info, comment=:comment, r.owner=:owner  WHERE id_reg_car='.$id.'  ', $params);   
+   $params=[];
 }
+
+
+
+if( isset($_GET['find']) AND  isset($_GET['poisk']) ) { $num=$_GET['poisk'];
+
+  $params = [      
+    'num_car' => $_GET['poisk'],
+  ];
+  $we=" AND r.num_car LIKE '%' :num_car '%' ";
+}
+
+
+$nevz= $db->query('SELECT  id_reg_car   FROM  reg_cars WHERE approved="0" '); 
+$row_col =count ($nevz);
+if(isset ( $_GET['nevz'] ) ){ echo $row_col; die(); }
+
 
 $car=$db->query("SELECT  r.id_reg_car , r.num_car, r.model , r.add_info, r.dateTime_order, r.comment, r.approved, r.id_user,r.owner,
                         u.name,u.surname,u.patronymic, 
-                       a.address  FROM  reg_cars r ,  users u, addresses a   WHERE r.id_user=u.id_user AND u.id_address=a.id_address"  );
+                       a.address  FROM  reg_cars r ,  users u, addresses a   WHERE r.id_user=u.id_user AND u.id_address=a.id_address ". $we . " "  , $params);
+            
+
 
 ?>
+
+
+
+
 <!DOCTYPE html>
 <html>
 
@@ -106,8 +133,34 @@ $car=$db->query("SELECT  r.id_reg_car , r.num_car, r.model , r.add_info, r.dateT
         <meta name="csrf-token" content="{{ csrf_token() }}">
     <script type="text/javascript">
 
+function nevz(e) {
 
-            $(document).ready(function () {
+  $.ajaxSetup({
+                headers : {
+                    'X-CSRF-Token' : "{{ csrf_token() }}"
+                }
+              });
+
+                $.ajax({
+  type: 'GET',
+  url: 'NewRegCar?nevz=1',
+  success: function(data) {
+    $('#UpdateTable').html(data);
+  }
+});
+ 
+
+            }
+  
+ $(document).ready(function () {
+setInterval(function(){
+  nevz();
+}, 2000);
+
+})
+
+
+ $(document).ready(function () {
 
          var myModal = new bootstrap.Modal(document.getElementById('myModal'), { 
   keyboard: false
@@ -131,19 +184,16 @@ $('.closb').on("click",  function(e)  {
            var owner = $(this).children('td:eq(6)') .children('p').text();
     $('#owner').val(owner);
             })
-        });
-
-
-
-        
+        });   
             </script>
     </head>
 
 <body>
-
     <?php if(isset ($reg) ):?>
      <div class="p-3 mb-2 bg-primary text-white"><h2 >Заявка одобрена</h2></div>
+    <?php 
 
+    ?>
     <?php endif;?>
 
     <?php if(isset ($ger) ):?>
@@ -155,7 +205,32 @@ $('.closb').on("click",  function(e)  {
      <div class="p-3 mb-2 bg-success bg-gradient text-white"><h2 >Данные изменены</h2></div>
     <?php endif;?>
    
-<a href="admin">Назад</a>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="admin">Назад</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-link active" aria-current="page" href="http://127.0.0.1:8000/NewRegCar">Домой</a>
+        <a class="nav-link" href="http://127.0.0.1:8000/NewRegCar?nev">Новые заявки <span class=" font-weight-bold" id="UpdateTable"><?php echo $row_col;?></span></a>
+      </div>
+      <div class="navbar-nav">
+        <form action="http://127.0.0.1:8000/NewRegCar"  method="GET">
+          <input name="poisk" value="<?php echo $num;?>"/>
+         <input name="find" type="submit"  value="Найти">
+       </form>
+      </div>
+    </div>
+  </div>
+</nav>
+
+
+
+
+
 <table class="table table-striped table-hover" id="tab">
   <thead>
     <tr>
@@ -183,8 +258,13 @@ $('.closb').on("click",  function(e)  {
     <td><?php echo '<p>'. $value['add_info']. '</p>'; ?>  </td>
     <td> <?php echo '<p>'. $value['dateTime_order']. '</p>'; ?>  </td>
     <td> <?php echo '<p>'. $value['comment']. '</p>'; ?>  </td>
-    <td> <?php echo '<p>'. $value['approved']. '</p>'; ?>  </td>
-    <td> <?php echo '<p>'. $value['owner']. '</p>'; ?>  </td>
+    <td> <p><?php if($value['approved']=='0') {echo "Ожидается";}
+                  if($value['approved']=='1') {echo "Подтверждена";} 
+                  if($value['approved']=='2') {echo "Отклонена";}?>   
+                </p></td>
+                <td> <p><?php if($value['owner']=='0') {echo "Гостевая";}
+                  if($value['owner']=='1') {echo "Личная";}?>  
+                </p></td>
     <td><?php echo '<p>'.$value['surname'].' '.mb_substr($value['name'], 0, 1) .'. '.mb_substr($value['patronymic'], 0, 1) . '</p>'; ?>  </td>
     <td><?php echo '<p>'. $value['address']. '</p>'; ?>  </td>
     <td>

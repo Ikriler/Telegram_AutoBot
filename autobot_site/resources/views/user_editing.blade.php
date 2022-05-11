@@ -48,7 +48,7 @@
                     </div>
                     <button id="btnSearch" type="button" class="btn btn-default">Поиск</button>
                     <button id="btnClear" type="button" class="btn btn-default">Очистить</button>
-                    <button type="button" id="btnCreateTestUsers" class="btn btn-default">+5 пользователей</button>
+                    <!-- <button type="button" id="btnCreateTestUsers" class="btn btn-default">+5 пользователей</button> -->
                     <input value = "+ *" type="button" id="btnUpdateUsers" class="btn btn-default"/>
                 </form>
             </div>

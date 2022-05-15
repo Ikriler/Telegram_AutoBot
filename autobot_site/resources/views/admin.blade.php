@@ -33,9 +33,9 @@
                 <button type="submit">Управление пользователями</button>
             </form>
             
-             <form action="{{ route('newregcar') }}" method="GET">
+               <form action="{{ route('RegCars') }}"  method="GET">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}" />
-                <button type="submit">Управление машинами</button>
+                <button type="submit">Управление  машинами</button>
             </form>
             
             <form class=formtable>

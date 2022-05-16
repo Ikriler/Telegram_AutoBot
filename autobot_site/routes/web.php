@@ -79,8 +79,9 @@ Route::get('NewRegCar', function () {
 
 
 Route::apiResource('reg_cars', RegCarsController::class)->middleware('role');
-
 Route::post('reg_cars/update', [RegCarsController::class, 'update'])->middleware('role');
+Route::post('reg_cars/delete', [RegCarsController::class, 'destroy']);
+
 
 
 Route::get('/RegCars', function () {

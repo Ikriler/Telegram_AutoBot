@@ -14,7 +14,7 @@
 
     <body>
         <div class="maincontainer">
-        <header id="header" class="header">
+            <header id="header" class="header">
                 <div class="container d-flex justify-content-between align-items-center">
                     <div class="logo">
                         <a href="/">
@@ -28,9 +28,6 @@
                     </nav>
                 </div>
             </header>
-            <div class="text2">
-                <p>ОХРАНА РАБОТАЕТ КАК <br/>ЧАСЫ!</p>
-            </div>
             <div class="col-xs-8">
                 <form class="form-inline">
                     <div class="form-group">
@@ -51,17 +48,16 @@
                     
                 </form>
             </div>
-            <p class="text3">ЗАЯВКИ НА ВЪЕЗД</p>
-            <input value = "+ * users" type="button" id="btnUpdateUsers" class="btn btn-default"/>
-            <table id="grid2" class="table table-sortable"></table>
-            <p class="text4">ПОЛЬЗОВАТЕЛИ</p>
-            <table id="grid4"></table>  
-            <div class="footer" id="foooter">
-                <footer>
-                    © AVTOBOTS PRODUCTION 2022
-                </footer>
+            <div class=formtable>
+                <p class="text3">ЗАЯВКИ НА ВЪЕЗД</p>
+                <input value = "+ * users" type="button" id="btnUpdateUsers" class="btn btn-default"/>
+                <table id="grid2" class="table table-sortable"></table> 
             </div>
-        </div>        
+            
+        </div>  
+        <footer>
+            © AVTOBOTS PRODUCTION 2022
+        </footer>      
 
         <script type="text/javascript">
     var grid;
@@ -168,17 +164,17 @@
             grid = $('#grid2').grid({
                 uiLibrary: 'bootstrap',
                 columns: [
-                    { field: 'model', width: 100, title: 'Марка', sortable: true},
+                    { field: 'dateTime_order', width: 120, title: 'Дата', sortable: true},
                     { field: 'num_car', title: 'Номер машины', sortable: true},
-                    { field: 'dateTime_order', title: 'Дата', sortable: true},
-                    { field: 'add_info', title: 'Инфо', sortable: true},
-                    { field: 'comment', title: 'Коментарий'},
+                    { field: 'model', width: 80, title: 'Марка', sortable: true},
+                    { field: 'add_info', title: 'Адрес', sortable: true},
                     { field: 'id_reg_car', title: 'id машины', hidden: true},
                     { field: 'id_user', title: 'id пользователя', hidden: true},
-                    { field: 'owner', title: 'Собственность', sortable: true},
-                    { field: 'approved', title: 'Одобрение', sortable: false},
-                    { title: '', field: '', width: 35, type: 'icon', icon: 'glyphicon-plus', tooltip: 'Одобрение', events: { 'click': Dob} },
-                    { title: '', field: '', width: 35, type: 'icon', icon: 'glyphicon-minus', tooltip: 'Отклонение', events: { 'click': Del } }
+                    { field: 'owner', width: 140, title: 'Собственность', sortable: true},
+                    { field: 'comment', title: 'Коментарий'},
+                    { field: 'approved', width: 115, title: 'Одобрение', sortable: false},
+                    { title: '', field: '', width: 35, type: 'icon', icon: 'glyphicon-plus', tooltip: 'Одобрить', events: { 'click': Dob} },
+                    { title: '', field: '', width: 35, type: 'icon', icon: 'glyphicon-minus', tooltip: 'Отклонить', events: { 'click': Del } }
                   
                 ],
                 dataSource: '/reg_cars/',
@@ -202,83 +198,5 @@
             });
         });
     </script>
-
-    <script type="text/javascript">
-            $.ajaxSetup({
-                    headers : {
-                        'X-CSRF-Token' : "{{ csrf_token() }}"
-                    }
-                });
-            var grid2, dialog, dialogCreate;
-            function Edit(e) {
-                $('#id').val(e.data.id);
-                $('#name').val(e.data.record.name);
-                $('#email').val(e.data.record.email);
-                $('#password').val(e.data.record.password);
-                $('#user_id').val(e.data.record.user_id);
-                dialog.open('Edit user');
-            }
-            function Create() {
-                var record = {
-                    name: $('#nameC').val(),
-                    email: $('#emailC').val(),
-                    password: $('#passwordC').val(),
-                    role_id: $('#role_idC').val()
-                };
-                $.ajax({ url: '/users/create', data: record , method: 'POST' })
-                    .done(function () {
-                        dialogCreate.close();
-                        grid2.reload();
-                    })
-                    .fail(function () {
-                        alert('Failed to save.');
-                        dialogCreate.close();
-                    });
-            }
-            function Save() {
-                var record = {
-                    id: $('#id').val(),
-                    name: $('#name').val(),
-                    email: $('#email').val(),
-                    password: $('#password').val(),
-                    role_id: $('#role_id').val()
-                };
-                $.ajax({ url: '/users/update', data: record , method: 'POST' })
-                    .done(function () {
-                        dialog.close();
-                        grid2.reload();
-                    })
-                    .fail(function () {
-                        alert('Failed to save.');
-                        dialog.close();
-                    });
-            }
-            function Delete(e) {
-                if (confirm('Are you sure?')) {
-                    $.ajax({ url: '/users/delete', data: { id: e.data.id }, method: 'POST' })
-                        .done(function () {
-                            grid2.reload();
-                        })
-                        .fail(function () {
-                            alert('Failed to delete.');
-                        });
-                }
-            }
-            $(document).ready(function () {
-                grid2 = $('#grid4').grid({
-                    primaryKey: 'id',
-                    dataSource: '/users/index',
-                    uiLibrary: 'bootstrap',
-                    columns: [           
-                        { field: 'id', width:35, align:'center', title: 'ID' },
-                        { field: 'name', title: 'Имя', sortable: true },
-                        { field: 'email', title: 'Почта', sortable: true },
-                        { field: 'password', title: 'Пароль', sortable: true },
-                        { field: 'id_role', width:55, align:'center', title: 'Роль', sortable: false},
-                    ],
-                    pager: { limit: 5, sizes: [2, 5, 10, 20] }
-                });
-            });
-        </script>
     </body>
 </html>

@@ -3,11 +3,12 @@
     <head>
         <meta charset="UTF-8">
         <title>Администратор</title>
-        <link rel="stylesheet" href="css/admin.css">
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css" />
+        
         <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
         <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+        <link rel="stylesheet" href="css/admin.css">
         <meta name="csrf-token" content="{{ csrf_token() }}">
     </head>
     <body>
@@ -19,16 +20,16 @@
                             <img src="img/Autobot.png" alt="logo" width="50" height="50">
                         </a>
                     </div>
-                    <p class="text1">«Автобот»</p>
+                    <!-- <p class="text1">«Автобот»</p> -->
                     <nav class="header-nav">
                         <a href="/user_editing">Редактироваие пользователя      |</a>
-                        <a href="/otchet">Отчёт заявок пользователей      |</a>
+                        <a href="/UserReportFilter">Отчёт заявок пользователей      |</a>
                         <a href="/otchetAuto">Отчёт заявок на въезд      |</a>
                         <a href="/">  Выход</a>
                     </nav>
                 </div>
             </header>
-            <form action="{{ route('userManage') }}" method="GET">
+            <!-- <form action="{{ route('userManage') }}" method="GET">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                 <button type="submit">Управление пользователями</button>
             </form>
@@ -37,11 +38,13 @@
                 <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                 <button type="submit">Управление  машинами</button>
             </form>
+                <button type="submit">Управление машинами</button>
+            </form> -->
             
             <form class=formtable>
-                <div class="text2">
+                <!-- <div class="text2">
                     <p>ПО ФЕН-ШУЮ АДМИН ДОЛЖЕН<br/>СПАТЬ ГОЛОВОЙ<br/>НА СЕРВЕРЕ</p>
-                </div>
+                </div> -->
 
                 <input value = "+ *" type="button" id="btnUpdateUsers" class="btn btn-default"/>
                 <div class="text3">
@@ -50,10 +53,13 @@
 
                 <table class="grid1" id="grid2"></table>
 
+                <input value = "+ *" type="button" id="btnUpdateUsers1" class="btn btn-default"/>
                 <div class="text4">
+                    
                     <p>ЗАЯВКИ НА ВЪЕЗД</p>
+                    
                 </div>
-
+                
                 <table class="grid3" id="grid4"></table>
             </form>
 
@@ -161,6 +167,7 @@
 
                 $(document).ready(function () {
                     grids = $('#grid2').grid({
+                        uiLibrary: 'bootstrap',
                         dataSource: '/users/index',
                         columns: [
                             { field: 'id_user', title: 'id', hidden: true},
@@ -171,9 +178,8 @@
                             { field: 'address', title: 'Номер участка'},
                             { field: 'telegram_id', title: 'ID Телеграма'},
                             { field: 'approved', title: 'Статус'},
-                            { width: 124, tmpl: '<button>Добавить</button>', align: 'center', events: { 'click': UpAdd } },
-                            { width: 124, tmpl: '<button>Бан</button>', align: 'center', events: { 'click': Update } }
-                            
+                            { title: '', field: '', width: 35, type: 'icon', icon: 'glyphicon-plus', tooltip: 'Одобрение', events: { 'click': UpAdd} },
+                            { title: '', field: '', width: 35, type: 'icon', icon: 'glyphicon-minus', tooltip: 'Отклонение', events: { 'click': Update } }
                         ],
                         pager: { limit: 5, sizes: [2, 5, 10, 20] }
                     });
@@ -239,9 +245,38 @@
                     });
                 }
             }
+
+            let timerId1 = setInterval(() => {
+
+            var xhr1 = new XMLHttpRequest()
+            xhr1.open('GET', 'reg_cars/getCount', true)
+            xhr1.send()
+
+            xhr1.onreadystatechange = function() {
+                if (xhr1.readyState != 4) {
+                    return
+            }
+
+            var UsersCount1 = JSON.parse(xhr1.responseText)   
+            var newUsersCount1 = UsersCount1.count - grid.count(true)
+            $('#btnUpdateUsers1').val("+" + newUsersCount1)
+            if (xhr1.status === 200) {
+                    console.log('result', xhr1.responseText)
+                } else {
+                    console.log('err', xhr1.responseText)
+                }
+            }            
+            }, 2000);
+
+            $('#btnUpdateUsers1').on('click', function () {
+                grid.reload();
+            });
+
             $(document).ready(function () {
                 grid = $('#grid4').grid({
+                    primaryKey: 'id',
                     dataSource: '/reg_cars/',
+                    uiLibrary: 'bootstrap',
                     columns: [
 
                         { field: 'model', title: 'Марка', sortable: true},
@@ -252,8 +287,8 @@
                         { field: 'id_reg_car', title: 'id машины', hidden: true},
                         { field: 'id_user', title: 'id пользователя', hidden: true},
                         { field: 'approved', title: 'Действия'},
-                        { width: 124, tmpl: '<button>Одобрить</button>', align: 'center', events: { 'click': Dob } },
-                        { width: 124, tmpl: '<button>Отклонить</button>', align: 'center', events: { 'click': Del } }
+                        { title: '', field: '', width: 35, type: 'icon', icon: 'glyphicon-plus', tooltip: 'Одобрение', events: { 'click': Dob} },
+                        { title: '', field: '', width: 35, type: 'icon', icon: 'glyphicon-minus', tooltip: 'Отклонение', events: { 'click': Del } }
                     ],
                     pager: { limit: 5, sizes: [2, 5, 10, 20] }
                 });

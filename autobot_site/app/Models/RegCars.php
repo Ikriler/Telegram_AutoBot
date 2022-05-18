@@ -45,6 +45,10 @@ class RegCars extends Model
         ]);
     }
     
+    public function user() {
+        return $this->hasOne(User::class);
+    }
+    
     public static function getRegCarById($id_reg_car): RegCars
     {
         return RegCars::query()->where('id_reg_car', $id_reg_car)->firstOrNew();

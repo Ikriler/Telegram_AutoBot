@@ -257,7 +257,7 @@
 
             var UsersCount1 = JSON.parse(xhr1.responseText)   
             var newUsersCount1 = UsersCount1.count - grid.count(true)
-            $('#btnUpdateUsers1').val("+" + newUsersCount1)
+            $('#btnUpdateUsers1').val("+ " + newUsersCount1)
             if (xhr1.status === 200) {
                     console.log('result', xhr1.responseText)
                 } else {
@@ -269,7 +269,7 @@
             $('#btnUpdateUsers1').on('click', function () {
                 grid.reload();
             });
-            
+
             $(document).ready(function () {
                 grid = $('#grid4').grid({
                     dataSource: '/reg_cars/',

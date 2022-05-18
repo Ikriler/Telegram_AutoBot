@@ -14,7 +14,7 @@ body {
 #grid2{ 
     margin-left: 200px;
     width: 1200px; 
-    margin-top: 20px; 
+    margin-top: 60px; 
     height:200px; 
     border: 0px; 
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
@@ -25,31 +25,6 @@ body {
 } 
 
 #grid2 button {
-    background: #2B5378; 
-    color: white; 
-    width: 40px; 
-    height: 30px; 
-    margin-left: 12px; 
-    transition: all 0.5s ease; 
-    border-radius: 10px; 
-    border: #2B5378; 
-}
- 
-#grid4{ 
-    margin-left: 200px;
-    width: 1200px; 
-    margin-top: 100px;
-    margin-bottom: 70px; 
-    height:200px; 
-    border: 0px; 
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    font-size:15px;  
-    color:#353535; 
-    background-color: #ffffff; 
-    border-radius: 20px; 
-}
-
-#grid4 button {
     background: #2B5378; 
     color: white; 
     width: 40px; 
@@ -100,18 +75,6 @@ table button {
     letter-spacing: 0.04em;
     color: #FFFFFF;
     margin-left: -20px;
-}
-
-.text2 {
-    width: 500px;
-    left: 27px;
-    font-family: 'Open Sans';
-    font-style: bold;
-    font-weight: 700;
-    font-size: 36px;
-    color: #FFFFFF;
-    margin-top: 20px;
-    margin-left: 27px;
 }
 
 .text3 {
@@ -203,7 +166,7 @@ input {
     color: #FFFFFF;
 }
 
-#foooter {
+footer {
     position: absolute;
 	color: white;
 	text-align: center;
@@ -218,7 +181,6 @@ input {
 	height:200px;
 	border-style:solid;
 	border-bottom-width:thin;
-    table-layout:fixed;
     empty-cells:show; 
     font-size:18px;
     color:#353535;
@@ -226,22 +188,9 @@ input {
     border-radius: 10px;
 }
 
-#grid4{
-    margin-top: 60px;
-    top: 100px;
-    width:1000px;
-	height:200px;
-	border-style:solid;
-	border-bottom-width:thin;
-
-       table-layout:fixed;
-       empty-cells:show; 
-       
-       font-size:18px;
-       
-       color:#353535;
-       background-color: #ffffff;
-       border-radius: 10px;
+.formtable{
+    width: 0 auto;
+    height: 0 auto;
 }
 
 .fi_tr{
@@ -287,9 +236,10 @@ tr:hover{
 
 .form-group{
     margin-left: 430px;
+    margin-top: 35px;
 }
 
 .form-group button{
     margin-top: 10px;
-    margin-left: 90px;
+    margin-left: 125px;
 }

@@ -9,7 +9,6 @@ use App\Models\RegCars;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
 class RegCarsController extends Controller
 {
     /**
@@ -20,7 +19,6 @@ class RegCarsController extends Controller
      */
     public function index(Request  $request)
     {
-
         $paginateNumber = $request->input('limit') ?? 5;
 
         $paginate = DB::table('reg_cars')
@@ -39,12 +37,17 @@ class RegCarsController extends Controller
             $paginate = $paginate->where("dateTime_order", "like", '%' . $request->input("dateTime_order") . '%');
         }
 
-        $paginate = $paginate->paginate($paginateNumber);
 
+        if(!empty($request->input("approved"))) {
+            $paginate = $paginate->where("approved", "like", '%' . $request->input("approved") . '%');
+        }
+
+        $paginate = $paginate->paginate($paginateNumber);
         // $paginate = RegCars::query()->paginate($request->input('limit'));
 
         return response()->json(['message' => 'success', 'records' => $paginate->items(), 'total' => $paginate->total()], 200);
     }
+    
     /**
      * Store a newly created resource in storage.
      *
@@ -68,6 +71,12 @@ class RegCarsController extends Controller
         return response()->json(['message' => 'success', 'records' => $RegCars], 200);
     }
 
+    public function getCarsCount()
+    {
+        $count = RegCars::query()->count();
+        return response()->json(['message' => 'success', 'count' => $count], 200);
+    }
+
     /**
      * Display the specified resource.
      *
@@ -79,12 +88,6 @@ class RegCarsController extends Controller
         return response()->json(['message' => 'success', 'records' => $RegCars], 200);
     }
 
-    public function getCarsCount()
-    {
-        $count = RegCars::query()->count();
-        return response()->json(['message' => 'success', 'count' => $count], 200);
-    }
-
     /**
      * Update the specified resource in storage.
      *
@@ -92,6 +95,7 @@ class RegCarsController extends Controller
      * @param  \App\Models\RegCars  $RegCars
      * @return \Illuminate\Http\Response
      */
+    
     public function update(RegCarsRequestUpdate $request, RegCars $RegCars)
     {
         $RegCars = RegCars::getRegCarById($request->getIdRegCar());

@@ -37,11 +37,17 @@ class RegCarsController extends Controller
             $paginate = $paginate->where("dateTime_order", "like", '%' . $request->input("dateTime_order") . '%');
         }
 
+
+        if(!empty($request->input("approved"))) {
+            $paginate = $paginate->where("approved", "like", '%' . $request->input("approved") . '%');
+        }
+
         $paginate = $paginate->paginate($paginateNumber);
         // $paginate = RegCars::query()->paginate($request->input('limit'));
 
         return response()->json(['message' => 'success', 'records' => $paginate->items(), 'total' => $paginate->total()], 200);
     }
+    
     /**
      * Store a newly created resource in storage.
      *
@@ -89,6 +95,7 @@ class RegCarsController extends Controller
      * @param  \App\Models\RegCars  $RegCars
      * @return \Illuminate\Http\Response
      */
+    
     public function update(RegCarsRequestUpdate $request, RegCars $RegCars)
     {
         $RegCars = RegCars::getRegCarById($request->getIdRegCar());

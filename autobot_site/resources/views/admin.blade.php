@@ -174,10 +174,10 @@
                             { field: 'name', title: 'Имя', sortable: true, colspan: 3}, 
                             { field: 'surname', title: 'Фамилия', sortable: true},
                             { field: 'patronymic', title: 'Отчетство', sortable: true},
-                            { field: 'phone_number', title: 'Номер телеофна'},
-                            { field: 'address', title: 'Номер участка'},
-                            { field: 'telegram_id', title: 'ID Телеграма'},
-                            { field: 'approved', title: 'Статус'},
+                            { field: 'phone_number', title: 'Номер телеофна', sortable: true},
+                            { field: 'address', title: 'Номер участка', sortable: true},
+                            { field: 'telegram_id', title: 'ID Телеграма', sortable: true},
+                            { field: 'approved', title: 'Статус', sortable: true},
                             { title: '', field: '', width: 35, type: 'icon', icon: 'glyphicon-plus', tooltip: 'Одобрение', events: { 'click': UpAdd} },
                             { title: '', field: '', width: 35, type: 'icon', icon: 'glyphicon-minus', tooltip: 'Отклонение', events: { 'click': Update } }
                         ],
@@ -185,7 +185,7 @@
                     });
                 });
         </script>
-
+        
         <script type="text/javascript">
             var grid;
 
@@ -271,29 +271,27 @@
             $('#btnUpdateUsers1').on('click', function () {
                 grid.reload();
             });
-
+            
             $(document).ready(function () {
                 grid = $('#grid4').grid({
-                    primaryKey: 'id',
                     dataSource: '/reg_cars/',
                     uiLibrary: 'bootstrap',
                     columns: [
-
                         { field: 'model', title: 'Марка', sortable: true},
-                        { field: 'num_car', title: 'Номер машины'},
-                        { field: 'dateTime_order', title: 'Дата'},
-                        { field: 'add_info', title: 'Инфо'},
-                        { field: 'comment', title: 'Коментарий'},
+                        { field: 'num_car', title: 'Номер машины', sortable: true,},
+                        { field: 'dateTime_order', title: 'Дата', sortable: true,},
+                        { field: 'add_info', title: 'Инфо', sortable: true,},
+                        { field: 'comment', title: 'Коментарий', sortable: true,},
                         { field: 'id_reg_car', title: 'id машины', hidden: true},
                         { field: 'id_user', title: 'id пользователя', hidden: true},
-                        { field: 'approved', title: 'Действия'},
+                        { field: 'approved', title: 'Действия', sortable: true,},
                         { title: '', field: '', width: 35, type: 'icon', icon: 'glyphicon-plus', tooltip: 'Одобрение', events: { 'click': Dob} },
                         { title: '', field: '', width: 35, type: 'icon', icon: 'glyphicon-minus', tooltip: 'Отклонение', events: { 'click': Del } }
                     ],
                     pager: { limit: 5, sizes: [2, 5, 10, 20] }
                 });
             });
-        </script>
 
+        </script>
     </body>
 </html>

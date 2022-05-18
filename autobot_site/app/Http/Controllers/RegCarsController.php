@@ -21,13 +21,17 @@ class RegCarsController extends Controller
     {
         $paginateNumber = $request->input('limit') ?? 5;
 
+
+        //$paginate = RegCars::with('user')->get()->orderBy($request->input('sortBy') ?? 'reg_cars.id_reg_car', $request->input('direction') ?? 'desc');;
+
         $paginate = DB::table('reg_cars')
-        ->join('users', 'users.id_user', '=', 'reg_cars.id_user')->orderBy($request->input('sortBy') ?? 'reg_cars.id_reg_car', $request->input('direction') ?? 'desc');
+        ->join('users', 'users.id_user', '=', 'reg_cars.id_user')->select('reg_cars.*', 'users.id_user', 'users.id_address')->join("addresses","addresses.id_address", "=", "users.id_address" )->orderBy($request->input('sortBy') ?? 'reg_cars.id_reg_car', $request->input('direction') ?? 'desc');
 
         // $paginate = DB::table('reg_cars')
         // ->join('addresses', 'addresses.id_address', '=', 'users.id_address')
         // ->join('roles', 'roles.id_role', '=', 'users.id_role')
         // ->join('essences', 'essences.id_essence', '=', 'users.id_essence')->orderBy($request->input('sortBy') ?? 'users.id_user', $request->input('direction') ?? 'desc')->paginate($paginateNumber);
+
 
         if(!empty($request->input("num_car"))) {
             $paginate = $paginate->where("num_car", "like", '%' . $request->input("num_car") . '%');

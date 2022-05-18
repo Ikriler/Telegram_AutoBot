@@ -36,6 +36,8 @@
             
                <form action="{{ route('RegCars') }}"  method="GET">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}" />
+                <button type="submit">Управление  машинами</button>
+            </form>
                 <button type="submit">Управление машинами</button>
             </form> -->
             

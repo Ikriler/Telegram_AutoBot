@@ -44,7 +44,9 @@
                         <!-- <input id="txtPassword" type="text" placeholder="Password" class="form-control" />
                         <input id="txtRole" type="text" placeholder="Role" class="form-control" /> -->
                         <button id="btnSearch" type="button" class="btn btn-default">Поиск</button>
-                    <button id="btnClear" type="button" class="btn btn-default">Очистить</button>r
+                    <button id="btnClear" type="button" class="btn btn-default">Очистить</button>        
+                    <button id="btnCreateCar" type="button" class="btn btn-default pull-right">Новая заявка</button>
+        
                     </div>
                     
                     <!-- <button type="button" id="btnCreateTestUsers" class="btn btn-default">+5 </button> -->
@@ -62,6 +64,8 @@
                 </footer>
             </div>
         </div>        
+
+ 
 
 
         <div id="dialog" style="display: none">
@@ -92,6 +96,48 @@
             </div>
             <button type="button" id="btnSave" class="btn btn-default">Save</button>
             <button type="button" id="btnCancel" class="btn btn-default">Cancel</button>
+        </form>
+    </div>
+
+
+
+    
+    <div id="dialogCreate" style="display: none">
+        <form>
+            <div>
+                <label for="num_car">Номер машины</label>
+                <input type="text" class="form-control" id="num_car" name="num_carC" value="">
+            </div>
+            <div>
+                <label for="model">Марка машины</label>
+                <input type="text" class="form-control" id="model" name="modelC"  value="">
+            </div>
+            <div>
+                <label for="add_info">Инфо</label>
+                <input type="text" class="form-control" id="add_info" name="add_infoC"  value="">
+            </div>
+            <div class="form-group">
+                <label for="comment">Комент</label>
+                <input type="text" class="form-control" id="comment" name="commentC"  value="">
+            </div>
+            <div>
+                <label for="data">Дата</label>
+                <input type="text" class="form-control" id="add_info" name="dateTime_OrderC"  value="">
+            </div>
+            <div>
+                <label for="id_user">id_user</label>
+                <input type="text" class="form-control" id="add_info" name="id_userC"  value="">
+            </div>
+            <div>
+                <label for="approved">Статус</label>
+                <input type="text" class="form-control" id="add_info" name="approvedC"  value="">
+            </div>
+            <div class="form-group">
+                <label for="owner">Личная/Гостевая</label>
+                <input type="text" class="form-control" id="owner" name="ownerC"  value="">
+            </div>
+            <button type="button" id="btnCreate" class="btn btn-default">Создать</button>
+            <button type="button" id="btnCreCancel" class="btn btn-default">Отмена</button>
         </form>
     </div>
         
@@ -217,7 +263,35 @@
                     dialog.close();
                 });
         }
+
+        var grid, dialogCreate;
+        function Create() {
+          alert('Хуйня');
+          dialogCreate.open('Создать новую заявку');
+        }
     
+        var grid, dialogCreate;
+        function CreateCar() {
+            var record = {
+                num_car: $('#num_carC').val(),
+                model: $('#modelC').val(),
+                owner: $('#ownerC').val(),
+                add_info: $('#add_infoC').val(),         
+                dateTime_order: $('#dateTime_OrderC').val(),  
+                comment: $('#commentC').val(),
+                approved: $('#approvedC').val(),
+                id_user: $('#id_userC').val()
+            };
+            $.ajax({ url: '/reg_cars/create', data: record , method: 'POST' })
+                .done(function () {
+                    dialogCreate.close();
+                    grid.reload();
+                })
+                .fail(function () {
+                    alert('Failed to save.');
+                    dialogCreate.close();
+                });
+        }
 
         function btnCancel() {
                 dialog.close();
@@ -272,6 +346,13 @@
                 modal: true
                 
             });
+            dialogCreate = $('#dialogCreate').dialog({
+                uiLibrary: 'bootstrap',
+                autoOpen: false,
+                resizable: false,
+                modal: true
+                
+            });
             $('#btnSave').on('click', Save);
             $('#btnCancel').on('click', function () {
                 dialog.close();
@@ -279,7 +360,11 @@
             $('#btnSearch').on('click', function () {
                 grid.reload({ page: 1, num_car: $('#txtNumCar').val(), dateTime_order: $('#txtdateTime').val()});
             });
-         
+            $('#btnCreate').on('click', CreateCar);
+            $('#btnCreateCar').on('click', Create);
+            $('#btnCreCancel').on('click', function () {
+                dialogCreate.close();
+            });
             $('#btnClear').on('click', function () {
                 $('#id_reg_car').val('');
                 $('#num_car').val('');

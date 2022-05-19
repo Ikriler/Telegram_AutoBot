@@ -29,8 +29,10 @@ class RegCarsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(RegCarsRequestCreate $request)
+     public function store(RegCarsRequestCreate $request)
     {
+
+     
         $RegCars = RegCars::make(
             $request->getNumCar(),
             $request->getModel(),
@@ -39,10 +41,11 @@ class RegCarsController extends Controller
             $request->getDateTimeOrder(),
             $request->getComment(),
             $request->getApproved(),
-            
+            $request -> User::getById($RegCars->getIdUser())     
         );
+        dd($request);
+
         $RegCars->save();
-        
         return response()->json(['message' => 'success', 'records' => $RegCars], 200);
     }
 

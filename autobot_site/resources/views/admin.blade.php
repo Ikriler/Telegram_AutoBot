@@ -29,6 +29,7 @@
                     </nav>
                 </div>
             </header>
+            
             <!-- <form action="{{ route('userManage') }}" method="GET">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                 <button type="submit">Управление пользователями</button>

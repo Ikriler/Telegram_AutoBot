@@ -30,7 +30,7 @@
                 </div>
             </header>
             
-            <!-- <form action="{{ route('userManage') }}" method="GET">
+            <form action="{{ route('userManage') }}" method="GET">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                 <button type="submit">Управление пользователями</button>
             </form>
@@ -39,7 +39,7 @@
                 <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                 <button type="submit">Управление  машинами</button>
             </form>
-                <button type="submit">Управление машинами</button>
+                <!-- <button type="submit">Управление машинами</button>
             </form> -->
             
             <form class=formtable>
@@ -189,8 +189,7 @@
         
         <script type="text/javascript">
             var grid;
-
-            function Dob(e) {
+        function Dob(e) {
                 $.ajaxSetup({
                     headers : {
                         'X-CSRF-Token' : "{{ csrf_token() }}"
@@ -206,12 +205,12 @@
                         comment: e.data.record.comment,
                         id_reg_car: e.data.record.id_reg_car,
                         id_user: e.data.record.id_user,
+                        owner: e.data.record.owner,
                         approved: 1
-
                     };
                     $.ajax({ url: '/reg_cars/update', data: record, method: 'POST' })  
                     .done(function () {
-                        alert('Nice.');
+                        alert('Выполнено.');
                         grid.reload();
                     })
                     .fail(function () {
@@ -219,7 +218,9 @@
                     });
                 }
             }
-            function Del(e) {
+        
+
+        function Del(e) {
                 $.ajaxSetup({
                     headers : {
                         'X-CSRF-Token' : "{{ csrf_token() }}"
@@ -234,17 +235,54 @@
                         comment: e.data.record.comment,
                         id_reg_car: e.data.record.id_reg_car,
                         id_user: e.data.record.id_user,
+                        owner: e.data.record.owner,
                         approved: 2
                     };
                     $.ajax({ url: '/reg_cars/update', data: record, method: 'POST' })  
                     .done(function () {
-                        alert('Nice.');
+                        alert('Выполнено.');
                         grid.reload();
                     })
                     .fail(function () {
-                        alert('Ошибка сохранения.');
+                        alert('Ошибка в отклонении.');
                     });
                 }
+            }
+
+
+            //DB::table('reg_cars')->where('id_reg_car', '=', $_GET[$a])->delete();           
+            
+            function Deleete(e) {
+                $.ajaxSetup({
+                    headers : {
+                        'X-CSRF-Token' : "{{ csrf_token() }}"
+                    }
+                });
+                if (confirm('Вы уверены?')) {
+                
+
+                    $.ajax({url: '/reg_cars/delete', data: { id_reg_car: e.data.record.id_reg_car }, method: 'POST' })
+                        .done(function () {
+                            alert('Вы удалили');
+                            grid.reload();
+                        })
+                        .fail(function () {
+                            alert('Ошибка удаления.');
+                        });
+                }
+            }
+
+
+            var grid, dialog, dialogCreate;
+            function Chg(e) {
+            alert('dadsad');
+            $('#id_reg_car').val(e.data.record.id_reg_car);
+                $('#num_car').val(e.data.record.num_car);
+                $('#model').val(e.data.record.model);
+                $('#add_info').val(e.data.record.add_info);
+                $('#comment').val(e.data.record.comment);
+                $('#owner').val(e.data.record.owner);
+                dialog.open('Изменение данных о машине');
             }
 
             let timerId1 = setInterval(() => {
@@ -274,25 +312,47 @@
             });
 
             $(document).ready(function () {
-                grid = $('#grid4').grid({
-                    dataSource: '/reg_cars/',
-                    uiLibrary: 'bootstrap',
-                    columns: [
-                        { field: 'model', title: 'Марка', sortable: true},
-                        { field: 'num_car', title: 'Номер машины', sortable: true,},
-                        { field: 'dateTime_order', title: 'Дата', sortable: true,},
-                        { field: 'add_info', title: 'Инфо', sortable: true,},
-                        { field: 'comment', title: 'Коментарий', sortable: true,},
-                        { field: 'id_reg_car', title: 'id машины', hidden: true},
-                        { field: 'id_user', title: 'id пользователя', hidden: true},
-                        { field: 'approved', title: 'Действия', sortable: true,},
-                        { title: '', field: '', width: 35, type: 'icon', icon: 'glyphicon-plus', tooltip: 'Одобрение', events: { 'click': Dob} },
-                        { title: '', field: '', width: 35, type: 'icon', icon: 'glyphicon-minus', tooltip: 'Отклонение', events: { 'click': Del } }
-                    ],
-                    pager: { limit: 5, sizes: [2, 5, 10, 20] }
-                });
+            grid = $('#grid4').grid({
+                uiLibrary: 'bootstrap',
+                columns: [
+                    { field: 'model', width: 100, title: 'Марка', sortable: true},
+                    { field: 'num_car', title: 'Номер машины', sortable: true},
+                    { field: 'dateTime_order', title: 'Дата', sortable: true},
+                    { field: 'add_info', title: 'Инфо', sortable: true},
+                    { field: 'comment', title: 'Коментарий'},
+                    { field: 'id_reg_car', title: 'id машины', hidden: true},
+                    { field: 'id_user', title: 'id пользователя', hidden: true},
+                    { field: 'owner', title: 'Собственность', sortable: true},
+                    { field: 'approved', title: 'Статус', sortable: false},
+                    { title: '', field: '', width: 35, type: 'icon', icon: 'glyphicon-plus', tooltip: 'Одобрение', events: { 'click': Dob} },
+                    { title: '', field: '', width: 35, type: 'icon', icon: 'glyphicon-minus', tooltip: 'Отклонение', events: { 'click': Del } },
+                    { title: '', field: '', width: 35, type: 'icon', icon: 'glyphicon-remove', tooltip: 'Удалить', events: { 'click': Deleete } },
+                    { title: '', field: '', width: 35, type: 'icon', icon: 'glyphicon-pencil', tooltip: 'Изменить', events: { 'click': Chg} }
+                ],
+                dataSource: '/reg_cars/',
+                sort: true,
+                pager: { limit: 5, sizes: [2, 5, 10, 20] }
             });
-
-        </script>
+            $('#btnSearch').on('click', function () {
+                grid.reload({ page: 1, num_car: $('#txtNumCar').val(), dateTime_order: $('#txtdateTime').val()});
+            });
+            $('#btnSave').on('click', Safe);
+            $('#btnCancel').on('click', function () {
+                dialog.close();
+            });
+            $('#btnClear').on('click', function () {
+                $('#id_reg_car').val('');
+                $('#num_car').val('');
+                $('#model').val('');
+                $('#add_info').val('');
+                $('#dateTime_order').val('');
+                $('#comment').val('');
+                $('#approved').val('');
+                $('#id_user').val('');
+                $('#owner').val('');
+                grid.reload({ id_reg_car: '', num_car: '', model: '', add_info: '', dateTime_order: '', comment: '', approved: '', id_user: '', owner: '' });
+            });
+        });
+    </script>
     </body>
 </html>

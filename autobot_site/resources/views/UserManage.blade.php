@@ -247,7 +247,7 @@
         $('#btnUpdateUsers').on('click', function () {
             grid.reload();
         });
-        
+                
         $(document).ready(function () {
             grid = $('#grid').grid({
                 primaryKey: 'id',
@@ -261,7 +261,20 @@
                     { field: 'phone_number', title: 'Номер телефона', sortable: true },
                     { field: 'address', title: 'Адрес', sortable: true },
                     { field: 'telegram_id', title: 'Код тг', sortable: true },
-                    { field: 'approved', title: 'Подтвержден', sortable: true },
+                    { field: 'approved',
+                    renderer: (value) => {
+                        switch (value) {
+                            case 0:
+                                return "Ожидает";
+                                break;
+                            case 1:
+                                return "Одобрен";
+                                break;
+                            case 2:
+                                return "Забанен";
+                                break;
+                        }
+                    },  title: 'Одобрение', sortable: true },
                     { field: 'name_role', title: 'Роль', sortable: true },
                     { field: 'email', title: 'Email', sortable: true },
                     { field: 'password', title: 'Пароль', sortable: true },

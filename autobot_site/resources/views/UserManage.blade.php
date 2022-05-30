@@ -71,7 +71,11 @@
             </div>
             <div class="form-group">
                 <label for="approved">Approved</label>
-                <input type="text" class="form-control" id="approvedC">
+                <select name="approved" class="form-control" id="approved">
+                    <option value="1">Одобрен</option>
+                    <option value="2">Забанен</option>
+                    <option value="0">Ожидает</option>
+                </select>
             </div>
 
             <div class="form-group">
@@ -121,7 +125,11 @@
             </div>
             <div class="form-group">
                 <label for="approved">Approved</label>
-                <input type="text" class="form-control" id="approved">
+                <select name="approved" class="form-control" id="approved">
+                    <option value="1">Одобрен</option>
+                    <option value="2">Забанен</option>
+                    <option value="0">Ожидает</option>
+                </select>
             </div>
             <div class="form-group">
                 <label for="email">Email</label>

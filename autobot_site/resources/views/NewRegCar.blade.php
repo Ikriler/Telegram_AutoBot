@@ -168,7 +168,7 @@
             $.ajax({ url: '/reg_cars/create', data: record , method: 'POST' })
                 .done(function () {
                     dialogCreate.close();
-                    alert('Спасибо Илье за победу');
+                    alert('Заявка успешно создана');
                     grid.reload();
                 })
                 .fail(function () {

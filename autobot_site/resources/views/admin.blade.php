@@ -178,7 +178,20 @@
                             { field: 'phone_number', title: 'Номер телеофна', sortable: true},
                             { field: 'address', title: 'Номер участка', sortable: true},
                             { field: 'telegram_id', title: 'ID Телеграма', sortable: true},
-                            { field: 'approved', title: 'Статус', sortable: true},
+                            { field: 'approved',
+                    renderer: (value) => {
+                        switch (value) {
+                            case 0:
+                                return "Ожидает";
+                                break;
+                            case 1:
+                                return "Одобрен";
+                                break;
+                            case 2:
+                                return "Забанен";
+                                break;
+                        }
+                    },  title: 'Одобрение', sortable: true },
                             { title: '', field: '', width: 35, type: 'icon', icon: 'glyphicon-plus', tooltip: 'Одобрение', events: { 'click': UpAdd} },
                             { title: '', field: '', width: 35, type: 'icon', icon: 'glyphicon-minus', tooltip: 'Отклонение', events: { 'click': Update } }
                         ],
@@ -315,15 +328,28 @@
             grid = $('#grid4').grid({
                 uiLibrary: 'bootstrap',
                 columns: [
+                    { field: 'dateTime_order', title: 'Дата', sortable: true},
                     { field: 'model', width: 100, title: 'Марка', sortable: true},
                     { field: 'num_car', title: 'Номер машины', sortable: true},
-                    { field: 'dateTime_order', title: 'Дата', sortable: true},
                     { field: 'add_info', title: 'Инфо', sortable: true},
                     { field: 'comment', title: 'Коментарий'},
                     { field: 'id_reg_car', title: 'id машины', hidden: true},
                     { field: 'id_user', title: 'id пользователя', hidden: true},
                     { field: 'owner', title: 'Собственность', sortable: true},
-                    { field: 'approved', title: 'Статус', sortable: false},
+                    { field: 'approved',
+                    renderer: (value) => {
+                        switch (value) {
+                            case 0:
+                                return "Ожидает";
+                                break;
+                            case 1:
+                                return "Одобрен";
+                                break;
+                            case 2:
+                                return "Забанен";
+                                break;
+                        }
+                    },  title: 'Одобрение', sortable: true },
                     { title: '', field: '', width: 35, type: 'icon', icon: 'glyphicon-plus', tooltip: 'Одобрение', events: { 'click': Dob} },
                     { title: '', field: '', width: 35, type: 'icon', icon: 'glyphicon-minus', tooltip: 'Отклонение', events: { 'click': Del } },
                     { title: '', field: '', width: 35, type: 'icon', icon: 'glyphicon-remove', tooltip: 'Удалить', events: { 'click': Deleete } },

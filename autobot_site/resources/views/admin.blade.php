@@ -35,12 +35,12 @@
                 <button type="submit">Управление пользователями</button>
             </form>
             
-               <form action="{{ route('RegCars') }}"  method="GET">
+               <form action="{{ route('newregcar') }}"  method="GET">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}" />
-                <button type="submit">Управление  машинами</button>
-            </form>
-                <!-- <button type="submit">Управление машинами</button>
+                <!-- <button type="submit">Управление  машинами</button>
             </form> -->
+                <button type="submit">Управление машинами</button>
+            </form>
             
             <form class=formtable>
                 <!-- <div class="text2">
@@ -56,7 +56,7 @@
 
                 <input value = "+ *" type="button" id="btnUpdateUsers1" class="btn btn-default"/>
                 <div class="text4">
-                    
+                <button id="btnAdd" type="button" class="btn btn-default pull-right">Новая заявка</button>
                     <p>ЗАЯВКИ НА ВЪЕЗД</p>
                     
                 </div>
@@ -81,6 +81,85 @@
                 © AVTOBOTS PRODUCTION 2022
             </footer>
         </div>
+
+        <div id="dialogCreate" style="display: none" class="container">
+        <form class="row">       
+    <div class="col-xs-6">
+            <div>
+                <label for="num_carC">Номер машины</label>
+                <input type="text" class="form-control" id="num_carC" name="num_car" value="">
+            </div>
+            <div>
+                <label for="modelC">Марка машины</label>
+                <input type="text" class="form-control" id="modelC" name="model"  value="">
+            </div>
+            <div>
+                <label for="add_infoC">Инфо</label>
+                <input type="text" class="form-control" id="add_infoC" name="add_info"  value="">
+            </div>
+            <div class="form-group">
+                <label for="commentC">Комент</label>
+                <input type="text" class="form-control" id="commentC" name="comment"  value="">
+            </div>
+            <div class="form-group">
+                <label for="approved">Approved</label>
+                <select name="approved" class="form-control" id="approved">
+                    <option value="1">Одобрен</option>
+                    <option value="2">Забанен</option>
+                    <option value="0">Ожидает</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="id_userC">Айди юзера</label>
+                <input type="text" class="form-control" id="id_userC" name="id_userC"  value="">
+            </div>
+            <div class="form-group">
+                <label for="ownerC">Личная/Гостевая</label>
+                <input type="text" class="form-control" id="ownerC" name="owner"  value="">
+            </div>
+        </div>
+
+        <div class="row">
+          
+            <button type="button" id="btnCreateUser" class="btn btn-default">Create</button>
+            <button type="button" id="btnCreateCancel" class="btn btn-default">Cancel</button>
+
+        </div>    
+
+        </form>
+    </div>
+
+
+
+        <div id="dialog" style="display: none">
+        <form>
+            <div>
+                <label for="id_reg_car">ID машины</label>
+                <input type="text" class="form-control" id="id_reg_car" name="id_reg_car" value="">
+            </div>
+            <div>
+                <label for="num_car">Номер машины</label>
+                <input type="text" class="form-control" id="num_car" name="num_car" value="">
+            </div>
+            <div>
+                <label for="model">Марка машины</label>
+                <input type="text" class="form-control" id="model" name="model"  value="">
+            </div>
+            <div>
+                <label for="add_info">Инфо</label>
+                <input type="text" class="form-control" id="add_info" name="add_info"  value="">
+            </div>
+            <div class="form-group">
+                <label for="comment">Комент</label>
+                <input type="text" class="form-control" id="comment" name="comment"  value="">
+            </div>
+            <div class="form-group">
+                <label for="owner">Личная/Гостевая</label>
+                <input type="text" class="form-control" id="owner" name="owner"  value="">
+            </div>
+            <button type="button" id="btnSave" class="btn btn-default">Save</button>
+            <button type="button" id="btnCancel" class="btn btn-default">Cancel</button>
+        </form>
 
         <script type="text/javascript">
             var grids;
@@ -201,37 +280,67 @@
         </script>
         
         <script type="text/javascript">
-            var grid;
-        function Dob(e) {
-                $.ajaxSetup({
-                    headers : {
-                        'X-CSRF-Token' : "{{ csrf_token() }}"
-                    }
-                    
-                });
-                if (confirm('Вы уверены?')) {
-                    var record = {
-                        num_car: e.data.record.num_car,
-                        model: e.data.record.model,
-                        add_info: e.data.record.add_info,
-                        dateTime_order: e.data.record.dateTime_order,
-                        comment: e.data.record.comment,
-                        id_reg_car: e.data.record.id_reg_car,
-                        id_user: e.data.record.id_user,
-                        owner: e.data.record.owner,
-                        approved: 1
-                    };
-                    $.ajax({ url: '/reg_cars/update', data: record, method: 'POST' })  
-                    .done(function () {
-                        alert('Выполнено.');
-                        grid.reload();
-                    })
-                    .fail(function () {
-                        alert('Ошибка сохранения.');
-                    });
+            $.ajaxSetup({
+                headers : {
+                    'X-CSRF-Token' : "{{ csrf_token() }}"
                 }
+            });
+            var grid, dialog, dialogCreate;
+            function CreateNew(e) {
+                var record = {
+                num_car: $('#num_carC').val(),
+                model: $('#modelC').val(),
+                add_info: $('#add_infoC').val(),
+                comment: $('#commentC').val(),
+                approved: $('#approved').val(),
+                id_user: $('#id_userC').val(),
+                owner: $('#ownerC').val()                
+            };
+            $.ajax({ url: '/reg_cars/create', data: record , method: 'POST' })
+                .done(function () {
+                    dialogCreate.close();
+                    alert('Заявка успешно создана');
+                    grid.reload();
+                })
+                .fail(function () {
+                    alert('Failed to save.');
+                    dialogCreate.close();
+                });
+
+
+        }
+
+
+    var grid;
+    function Dob(e) {
+            $.ajaxSetup({
+                headers : {
+                    'X-CSRF-Token' : "{{ csrf_token() }}"
+                }
+                
+            });
+            if (confirm('Вы уверены?')) {
+                var record = {
+                    num_car: e.data.record.num_car,
+                    model: e.data.record.model,
+                    add_info: e.data.record.add_info,
+                    dateTime_order: e.data.record.dateTime_order,
+                    comment: e.data.record.comment,
+                    id_reg_car: e.data.record.id_reg_car,
+                    id_user: e.data.record.id_user,
+                    owner: e.data.record.owner,
+                    approved: 1
+                };
+                $.ajax({ url: '/reg_cars/update', data: record, method: 'POST' })  
+                .done(function () {
+                    alert('Выполнено.');
+                    grid.reload();
+                })
+                .fail(function () {
+                    alert('Ошибка сохранения.');
+                });
             }
-        
+        }
 
         function Del(e) {
                 $.ajaxSetup({
@@ -286,17 +395,37 @@
             }
 
 
-            var grid, dialog, dialogCreate;
-            function Chg(e) {
-            alert('dadsad');
-            $('#id_reg_car').val(e.data.record.id_reg_car);
-                $('#num_car').val(e.data.record.num_car);
-                $('#model').val(e.data.record.model);
-                $('#add_info').val(e.data.record.add_info);
-                $('#comment').val(e.data.record.comment);
-                $('#owner').val(e.data.record.owner);
-                dialog.open('Изменение данных о машине');
-            }
+            var grid, dialog;
+        function Chg(e) {
+       
+           $('#id_reg_car').val(e.data.record.id_reg_car);
+            $('#num_car').val(e.data.record.num_car);
+            $('#model').val(e.data.record.model);
+            $('#add_info').val(e.data.record.add_info);
+            $('#comment').val(e.data.record.comment);
+            $('#owner').val(e.data.record.owner);
+            dialog.open('Изменение данных о машине');
+        }
+
+            function Save() {
+            var record = {
+                id_reg_car: $('#id_reg_car').val(),
+                num_car: $('#num_car').val(),
+                model: $('#model').val(),
+                add_info: $('#add_info').val(),
+                comment: $('#comment').val(),
+                owner: $('#owner').val()
+            };
+            $.ajax({ url: '/reg_cars/update', data: record , method: 'POST' })
+                .done(function () {
+                    dialog.close();
+                    grid.reload();
+                })
+                .fail(function () {
+                    alert('Failed to save.');
+                    dialog.close();
+                });
+        }
 
             let timerId1 = setInterval(() => {
 
@@ -328,14 +457,14 @@
             grid = $('#grid4').grid({
                 uiLibrary: 'bootstrap',
                 columns: [
-                    { field: 'dateTime_order', title: 'Дата', sortable: true},
-                    { field: 'model', width: 100, title: 'Марка', sortable: true},
+                    { field: 'dateTime_order', width: 120, title: 'Дата', sortable: true},
                     { field: 'num_car', title: 'Номер машины', sortable: true},
-                    { field: 'add_info', title: 'Инфо', sortable: true},
-                    { field: 'comment', title: 'Коментарий'},
+                    { field: 'model', width: 80, title: 'Марка', sortable: true},
+                    { field: 'add_info', title: 'Адрес', sortable: true},
                     { field: 'id_reg_car', title: 'id машины', hidden: true},
                     { field: 'id_user', title: 'id пользователя', hidden: true},
-                    { field: 'owner', title: 'Собственность', sortable: true},
+                    { field: 'owner', width: 140, title: 'Собственность', sortable: true},
+                    { field: 'comment', title: 'Коментарий'},
                     { field: 'approved',
                     renderer: (value) => {
                         switch (value) {
@@ -359,12 +488,44 @@
                 sort: true,
                 pager: { limit: 5, sizes: [2, 5, 10, 20] }
             });
+            dialog = $('#dialog').dialog({
+                uiLibrary: 'bootstrap',
+                autoOpen: false,
+                resizable: false,
+                modal: true
+                
+            });
+            dialogCreate = $('#dialogCreate').dialog({
+                uiLibrary: 'bootstrap',
+                autoOpen: false,
+                resizable: true,
+                modal: true,
+                width:'720'
+            });
+            $('#btnAdd').on('click', function () {
+                $('#nameC').val('');
+                $('#surnameC').val('');
+                $('#patronymicC').val('');
+                $('#phone_numberC').val('');
+                $('#addressC').val('');
+                $('#telegram_idC').val('');
+                $('#approvedC').val('');
+                $('#roleC').val('');
+                $('#emailC').val('');
+                $('#passwordC').val('');
+                $('#role_idC').val('');
+                dialogCreate.open('Новая заявка');
+            });
+            $('#btnSave').on('click', Save);
+            $('#btnCancel').on('click', function () {
+                dialog.close();
+            });
             $('#btnSearch').on('click', function () {
                 grid.reload({ page: 1, num_car: $('#txtNumCar').val(), dateTime_order: $('#txtdateTime').val()});
             });
-            $('#btnSave').on('click', Safe);
-            $('#btnCancel').on('click', function () {
-                dialog.close();
+            $('#btnCreateUser').on('click', CreateNew);
+            $('#btnCreateCancel').on('click', function(){
+                dialogCreate.close();
             });
             $('#btnClear').on('click', function () {
                 $('#id_reg_car').val('');

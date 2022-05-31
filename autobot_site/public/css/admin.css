@@ -303,6 +303,16 @@ tr:hover{
  background-color:#f5fafe;
 }
 
+#dialogCreate{
+    background: #2b5378b9;
+    color:#FFFFFF;
+}
+
+#dialogCreate button{
+    background: #2b5378b9;
+    color:#FFFFFF;
+}
+
 #btnUpdateUsers{
     margin-left: 1250px;
     margin-top: 10px;
@@ -343,4 +353,64 @@ tr:hover{
     letter-spacing: 0.04em;
     border-color: transparent;
     color: #ff0000;
+}
+
+#dialogCreate{
+    background: #2b5378b9;
+    color:#FFFFFF;
+}
+
+#dialogCreate button{
+    background: #2b5378b9;
+    color:#FFFFFF;
+}
+
+#btnCreateUser{
+    width: 100px;
+    margin-left: 10px;
+    
+}
+
+#btnCreateCancel{
+    width: 100px;
+    margin-left: 140px;
+
+    margin-top: -50px;
+}
+
+
+
+
+#dialog{
+    background: #2b5378b9;
+    color:#FFFFFF;
+}
+
+#dialog button{
+    background: #2b5378b9;
+    color:#FFFFFF;
+}
+
+#btnSave{
+    width: 100px;
+    margin-left: 10px;
+    
+}
+
+#btnCancel{
+    width: 100px;
+    margin-left: 140px;
+    margin-top: -50px;
+}
+
+#btnAdd{
+    background: #2B5378; 
+    color: white; 
+    width: 130px; 
+    height: 40px; 
+    margin-left: 12px; 
+    transition: all 0.5s ease; 
+    border-radius: 10px; 
+    border: #2B5378; 
+    font-size:18px;
 }

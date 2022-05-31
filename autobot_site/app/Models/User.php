@@ -57,6 +57,11 @@ class User extends Authenticatable
         ]);
     }
 
+    public function getIdUser()
+    {
+        return $this->attributes['id_user'];
+    }
+
     public static function getById($id): User
     {
         return User::query()->where('id_user', $id)->firstOrFail();

@@ -9,6 +9,8 @@ use App\Models\RegCars;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
+
 class RegCarsController extends Controller
 {
     /**
@@ -60,15 +62,16 @@ class RegCarsController extends Controller
      */
     public function store(RegCarsRequestCreate $request)
     {
+        date_default_timezone_set("Europe/Moscow");
         $RegCars = RegCars::make(
             $request->getNumCar(),
             $request->getModel(),
             $request->getOwner(),
             $request->getAddInfo(),
-            $request->getDateTimeOrder(),
+            date('Y-m-d H:i:s'),
             $request->getComment(),
             $request->getApproved(),
-            
+            User::getById($request->input("id_user"))
         );
         $RegCars->save();
         

@@ -41,7 +41,7 @@ class RegCars extends Model
             'dateTime_order' => $dateTime_order,
             'comment' => $comment,
             'approved' => $approved,
-            'id_user' => $id_user->getId()
+            'id_user' => $id_user->getIdUser()
         ]);
     }
     

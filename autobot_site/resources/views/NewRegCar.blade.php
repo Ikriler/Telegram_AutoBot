@@ -28,7 +28,7 @@
                     </div>
                     <p class="text1">«Автобот»</p>
                     <nav class="header-nav">
-                        <a href="/otchetAuto">Отчёт заявок на въезд      |</a>
+                        <a href="/RegCarsFilter">Отчёт заявок на въезд      |</a>
                         <a href="/">  Выход</a>
                     </nav>
                 </div>
@@ -96,12 +96,15 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="id_userC">Айди юзера</label>
+                <label for="id_userC">Айди юзера(можете посмотреть в другой таблице)</label>
                 <input type="text" class="form-control" id="id_userC" name="id_userC"  value="">
             </div>
             <div class="form-group">
                 <label for="ownerC">Личная/Гостевая</label>
-                <input type="text" class="form-control" id="ownerC" name="owner"  value="">
+                <select name="ownerC" class="form-control" id="ownerC">
+                    <option value="1">Личная</option>
+                    <option value="0">Гостевая</option>
+                </select>
             </div>
 </div>
 
@@ -141,7 +144,10 @@
             </div>
             <div class="form-group">
                 <label for="owner">Личная/Гостевая</label>
-                <input type="text" class="form-control" id="owner" name="owner"  value="">
+                <select name="owner" class="form-control" id="owner">
+                    <option value="1">Личная</option>
+                    <option value="0">Гостевая</option>
+                </select>
             </div>
             <button type="button" id="btnSave" class="btn btn-default">Save</button>
             <button type="button" id="btnCancel" class="btn btn-default">Cancel</button>
@@ -167,8 +173,8 @@
             };
             $.ajax({ url: '/reg_cars/create', data: record , method: 'POST' })
                 .done(function () {
+                    alert('Создал.');
                     dialogCreate.close();
-                    alert('Спасибо Илье за победу');
                     grid.reload();
                 })
                 .fail(function () {
@@ -333,8 +339,31 @@
                     { field: 'comment', title: 'Коментарий'},
                     { field: 'id_reg_car', title: 'id машины', hidden: true},
                     { field: 'id_user', title: 'id пользователя', hidden: true},
-                    { field: 'owner', title: 'Собственность', sortable: true},
-                    { field: 'approved', title: 'Статус', sortable: false},
+                    { field: 'owner',
+                    renderer: (value) => {
+                        switch (value) {
+                            case 0:
+                                return "Гостевая";
+                                break;
+                            case 1:
+                                return "Личная";
+                                break;                        
+                        }
+                    },  title: 'Собственность', sortable: true },                    
+                    { field: 'approved',
+                    renderer: (value) => {
+                        switch (value) {
+                            case 0:
+                                return "Ожидает";
+                                break;
+                            case 1:
+                                return "Одобрен";
+                                break;
+                            case 2:
+                                return "Забанен";
+                                break;
+                        }
+                    },  title: 'Cтатус', sortable: true },
                     { title: '', field: '', width: 35, type: 'icon', icon: 'glyphicon-plus', tooltip: 'Одобрение', events: { 'click': Dob} },
                     { title: '', field: '', width: 35, type: 'icon', icon: 'glyphicon-minus', tooltip: 'Отклонение', events: { 'click': Del } },
                     { title: '', field: '', width: 35, type: 'icon', icon: 'glyphicon-remove', tooltip: 'Удалить', events: { 'click': Deleete } },

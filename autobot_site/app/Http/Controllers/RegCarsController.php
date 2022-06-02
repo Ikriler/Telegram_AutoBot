@@ -44,8 +44,8 @@ class RegCarsController extends Controller
         }
 
 
-        if(!empty($request->input("approved"))) {
-            $paginate = $paginate->where("approved", "like", '%' . $request->input("approved") . '%');
+        if($request->input("approved") != "") {
+            $paginate = $paginate->where("reg_cars.approved", "like", '%' . $request->input("approved") . '%');
         }
 
         $paginate = $paginate->paginate($paginateNumber);

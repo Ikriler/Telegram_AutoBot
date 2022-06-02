@@ -69,9 +69,19 @@ Route::get('otchet', function () {
     return view('otchet');
 })->name('otchet');
 
+
+
 Route::get('otchetAuto', function () {
     return view('otchetAuto');
 })->name('otchetAuto');
+
+
+
+Route::get('RegCarsFilter', function () {
+    return view('RegCarsFilter');
+})->name('RegCarsFilter');
+
+
 
 Route::get('NewRegCar', function () {
     return view('NewRegCar');

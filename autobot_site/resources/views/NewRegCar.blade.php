@@ -175,6 +175,10 @@
                 .done(function () {
                     alert('Создал.');
                     dialogCreate.close();
+<<<<<<< HEAD
+=======
+                    alert('Заявка успешно создана');
+>>>>>>> 85bd797952a649d823b6fb3cfbf0408425ac0935
                     grid.reload();
                 })
                 .fail(function () {

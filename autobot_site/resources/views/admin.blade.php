@@ -24,7 +24,7 @@
                     <nav class="header-nav">
                         <a href="/user_editing">Редактироваие пользователя      |</a>
                         <a href="/UserReportFilter">Отчёт заявок пользователей      |</a>
-                        <a href="/otchetAuto">Отчёт заявок на въезд      |</a>
+                        <a href="/RegCarsFilter">Отчёт заявок на въезд      |</a>
                         <a href="/">  Выход</a>
                     </nav>
                 </div>

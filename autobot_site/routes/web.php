@@ -27,26 +27,26 @@ Route::get('/', function () {
 
 Route::get('welcome', function () {
     return view('welcome');
-})->name('welcome');
+})->name('welcome')->middleware('role');
 
 Route::get('user_editing', function () {
     return view('user_editing');
-})->name('user_editing');
+})->name('user_editing')->middleware('role');
 
-Route::post('users/update', [UserController::class, 'update']);
-Route::post('users/delete', [UserController::class, 'destroy']);
-Route::post('users/create', [UserController::class, 'store']);
-Route::get('users/index', [UserController::class, 'index']);
-Route::get('users/testData', [UserController::class, 'addFiveRandomUsers']);
-Route::get('users/getCount', [UserController::class, 'getUsersCount']);
-Route::get('reg_cars/getCount', [RegCarsController::class, 'getCarsCount']);
+Route::post('users/update', [UserController::class, 'update'])->middleware('admin');
+Route::post('users/delete', [UserController::class, 'destroy'])->middleware('admin');
+Route::post('users/create', [UserController::class, 'store'])->middleware('admin');
+Route::get('users/index', [UserController::class, 'index'])->middleware('admin');
+Route::get('users/testData', [UserController::class, 'addFiveRandomUsers'])->middleware('role');
+Route::get('users/getCount', [UserController::class, 'getUsersCount'])->middleware('role');
+Route::get('reg_cars/getCount', [RegCarsController::class, 'getCarsCount'])->middleware('role');
 
 Route::get('usersList', function() {
     return view("usersList");
-})->name("usersList");
+})->name("usersList")->middleware('role');
 
 Route::get('UserReportFilter', function() {
-    return view("UserReportFilter");
+    return view("UserReportFilter")->middleware('role');
 });
 
 Route::post('login', [AuthController::class, 'login'])->name("login");
@@ -57,41 +57,41 @@ Route::get('admin', function(){
 
 Route::get('security', function(){
     return view('security');
-})->name("security");
+})->name("security")->middleware('role:guard');
 
 Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('UserManage', function () {
     return view('UserManage');
-})->name('userManage');
+})->name('userManage')->middleware('role');
 
 Route::get('otchet', function () {
     return view('otchet');
-})->name('otchet');
+})->name('otchet')->middleware('role');
 
 
 
 Route::get('otchetAuto', function () {
     return view('otchetAuto');
-})->name('otchetAuto');
+})->name('otchetAuto')->middleware('role');
 
 
 
 Route::get('RegCarsFilter', function () {
     return view('RegCarsFilter');
-})->name('RegCarsFilter');
+})->name('RegCarsFilter')->middleware('role');
 
 
 
 Route::get('NewRegCar', function () {
     return view('NewRegCar');
-})->name('newregcar');
+})->name('newregcar')->middleware('role');
 
 
 Route::apiResource('reg_cars', RegCarsController::class)->middleware('role');
 Route::post('reg_cars/update', [RegCarsController::class, 'update'])->middleware('role');
-Route::post('reg_cars/delete', [RegCarsController::class, 'destroy']);
-Route::post('reg_cars/create', [RegCarsController::class, 'store']);
+Route::post('reg_cars/delete', [RegCarsController::class, 'destroy'])->middleware('role');
+Route::post('reg_cars/create', [RegCarsController::class, 'store'])->middleware('role');
 
 
 Route::get('/RegCars', function () {

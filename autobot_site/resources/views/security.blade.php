@@ -23,7 +23,7 @@
                     </div>
                     <p class="text1">«Автобот»</p>
                     <nav class="header-nav">
-                        <a href="/otchetAuto">Отчёт заявок на въезд      |</a>
+                        <a href="/RegCarsFilter">Отчёт заявок на въезд      |</a>
                         <a href="/">  Выход</a>
                     </nav>
                 </div>

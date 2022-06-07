@@ -376,7 +376,7 @@
                     });
                 }
             }
-
+            
 
             //DB::table('reg_cars')->where('id_reg_car', '=', $_GET[$a])->delete();           
             
@@ -409,7 +409,7 @@
             $('#model').val(e.data.record.model);
             $('#add_info').val(e.data.record.add_info);
             $('#comment').val(e.data.record.comment);
-            $('#owner').val(e.data.record.owner);
+            $('#ownerC').val(e.data.record.owner);
             dialog.open('Изменение данных о машине');
         }
 
@@ -420,7 +420,7 @@
                 model: $('#model').val(),
                 add_info: $('#add_info').val(),
                 comment: $('#comment').val(),
-                owner: $('#owner').val()
+                owner: $('#ownerC').val()
             };
             $.ajax({ url: '/reg_cars/update', data: record , method: 'POST' })
                 .done(function () {
@@ -552,7 +552,7 @@
                 $('#comment').val('');
                 $('#approved').val('');
                 $('#id_user').val('');
-                $('#owner').val('');
+                $('#ownerC').val('');
                 grid.reload({ id_reg_car: '', num_car: '', model: '', add_info: '', dateTime_order: '', comment: '', approved: '', id_user: '', owner: '' });
             });
         });

@@ -94,35 +94,38 @@
                 <input type="text" class="form-control" id="modelC" name="model"  value="">
             </div>
             <div>
-                <label for="add_infoC">Инфо</label>
+                <label for="add_infoC">Адрес</label>
                 <input type="text" class="form-control" id="add_infoC" name="add_info"  value="">
             </div>
             <div class="form-group">
-                <label for="commentC">Комент</label>
+                <label for="commentC">Коментарий</label>
                 <input type="text" class="form-control" id="commentC" name="comment"  value="">
             </div>
             <div class="form-group">
-                <label for="approved">Approved</label>
+                <label for="approved">Одобрение</label>
                 <select name="approved" class="form-control" id="approved">
-                    <option value="1">Одобрен</option>
-                    <option value="2">Забанен</option>
+                    <option value="1">Одобрено</option>
+                    <option value="2">Отклонено</option>
                     <option value="0">Ожидает</option>
                 </select>
             </div>
             <div class="form-group">
-                <label for="id_userC">Айди юзера</label>
+                <label for="id_userC">ID пользователя</label>
                 <input type="text" class="form-control" id="id_userC" name="id_userC"  value="">
             </div>
             <div class="form-group">
-                <label for="ownerC">Личная/Гостевая</label>
-                <input type="text" class="form-control" id="ownerC" name="owner"  value="">
+                <label for="ownerC">Принадлежность</label>
+                <select class="form-control"  id="ownerC" name="owner">
+                    <option value="1">Личная</option>
+                    <option value="2">Гостевая</option>
+                </select>
             </div>
         </div>
 
         <div class="row">
           
-            <button type="button" id="btnCreateUser" class="btn btn-default">Create</button>
-            <button type="button" id="btnCreateCancel" class="btn btn-default">Cancel</button>
+            <button type="button" id="btnCreateUser" class="btn btn-default">Сохранить</button>
+            <button type="button" id="btnCreateCancel" class="btn btn-default">Отменить</button>
 
         </div>    
 
@@ -135,7 +138,7 @@
         <form>
             <div>
                 <label for="id_reg_car">ID машины</label>
-                <input type="text" class="form-control" id="id_reg_car" name="id_reg_car" value="">
+                <input type="text" class="form-control" id="id_reg_car" name="id_reg_car" value="" disabled>
             </div>
             <div>
                 <label for="num_car">Номер машины</label>
@@ -146,19 +149,22 @@
                 <input type="text" class="form-control" id="model" name="model"  value="">
             </div>
             <div>
-                <label for="add_info">Инфо</label>
+                <label for="add_info">Адрес</label>
                 <input type="text" class="form-control" id="add_info" name="add_info"  value="">
             </div>
             <div class="form-group">
-                <label for="comment">Комент</label>
+                <label for="comment">Коментарий</label>
                 <input type="text" class="form-control" id="comment" name="comment"  value="">
             </div>
             <div class="form-group">
-                <label for="owner">Личная/Гостевая</label>
-                <input type="text" class="form-control" id="owner" name="owner"  value="">
+            <label for="ownerC">Принадлежность</label>
+                <select class="form-control"  id="ownerC" name="owner">
+                    <option value="1">Личная</option>
+                    <option value="2">Гостевая</option>
+                </select>
             </div>
-            <button type="button" id="btnSave" class="btn btn-default">Save</button>
-            <button type="button" id="btnCancel" class="btn btn-default">Cancel</button>
+            <button type="button" id="btnSave" class="btn btn-default">Сохранить</button>
+            <button type="button" id="btnCancel" class="btn btn-default">Отменить</button>
         </form>
 
         <script type="text/javascript">
@@ -254,7 +260,7 @@
                             { field: 'name', title: 'Имя', sortable: true, colspan: 3}, 
                             { field: 'surname', title: 'Фамилия', sortable: true},
                             { field: 'patronymic', title: 'Отчетство', sortable: true},
-                            { field: 'phone_number', title: 'Номер телеофна', sortable: true},
+                            { field: 'phone_number', title: 'Номер телефона', sortable: true},
                             { field: 'address', title: 'Номер участка', sortable: true},
                             { field: 'telegram_id', title: 'ID Телеграма', sortable: true},
                             { field: 'approved',
@@ -264,15 +270,15 @@
                                 return "Ожидает";
                                 break;
                             case 1:
-                                return "Одобрен";
+                                return "Одобрено";
                                 break;
                             case 2:
-                                return "Забанен";
+                                return "Отклонено";
                                 break;
                         }
                     },  title: 'Одобрение', sortable: true },
-                            { title: '', field: '', width: 35, type: 'icon', icon: 'glyphicon-plus', tooltip: 'Одобрение', events: { 'click': UpAdd} },
-                            { title: '', field: '', width: 35, type: 'icon', icon: 'glyphicon-minus', tooltip: 'Отклонение', events: { 'click': Update } }
+                            { title: '', field: '', width: 35, type: 'icon', icon: 'glyphicon-plus', tooltip: 'Одобрить', events: { 'click': UpAdd} },
+                            { title: '', field: '', width: 35, type: 'icon', icon: 'glyphicon-minus', tooltip: 'Отклонить', events: { 'click': Update } }
                         ],
                         pager: { limit: 5, sizes: [2, 5, 10, 20] }
                     });
@@ -303,7 +309,7 @@
                     grid.reload();
                 })
                 .fail(function () {
-                    alert('Failed to save.');
+                    alert('Ошибка');
                     dialogCreate.close();
                 });
 
@@ -337,7 +343,7 @@
                     grid.reload();
                 })
                 .fail(function () {
-                    alert('Ошибка сохранения.');
+                    alert('Ошибка');
                 });
             }
         }
@@ -422,7 +428,7 @@
                     grid.reload();
                 })
                 .fail(function () {
-                    alert('Failed to save.');
+                    alert('Ошибка');
                     dialog.close();
                 });
         }
@@ -463,7 +469,17 @@
                     { field: 'add_info', title: 'Адрес', sortable: true},
                     { field: 'id_reg_car', title: 'id машины', hidden: true},
                     { field: 'id_user', title: 'id пользователя', hidden: true},
-                    { field: 'owner', width: 140, title: 'Собственность', sortable: true},
+                    { field: 'owner',
+                    renderer: (value) => {
+                        switch (value) {
+                            case 1:
+                                return "Личная";
+                                break;
+                            case 2:
+                                return "Гостевая";
+                                break;
+                        }
+                    },  title: 'Собственность', sortable: true },
                     { field: 'comment', title: 'Коментарий'},
                     { field: 'approved',
                     renderer: (value) => {
@@ -472,15 +488,15 @@
                                 return "Ожидает";
                                 break;
                             case 1:
-                                return "Одобрен";
+                                return "Одобрено";
                                 break;
                             case 2:
-                                return "Забанен";
+                                return "Отклонено";
                                 break;
                         }
                     },  title: 'Одобрение', sortable: true },
-                    { title: '', field: '', width: 35, type: 'icon', icon: 'glyphicon-plus', tooltip: 'Одобрение', events: { 'click': Dob} },
-                    { title: '', field: '', width: 35, type: 'icon', icon: 'glyphicon-minus', tooltip: 'Отклонение', events: { 'click': Del } },
+                    { title: '', field: '', width: 35, type: 'icon', icon: 'glyphicon-plus', tooltip: 'Одобрить', events: { 'click': Dob} },
+                    { title: '', field: '', width: 35, type: 'icon', icon: 'glyphicon-minus', tooltip: 'Отклонить', events: { 'click': Del } },
                     { title: '', field: '', width: 35, type: 'icon', icon: 'glyphicon-remove', tooltip: 'Удалить', events: { 'click': Deleete } },
                     { title: '', field: '', width: 35, type: 'icon', icon: 'glyphicon-pencil', tooltip: 'Изменить', events: { 'click': Chg} }
                 ],

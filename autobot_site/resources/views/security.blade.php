@@ -54,7 +54,7 @@
                 <button id="btnSearch" type="button" class="btn btn-default">Поиск</button>
                 <button id="btnClear" type="button" class="btn btn-default">Очистить</button>
             </div>
-                <button id="btnAdd1" type="button" class="btn btn-default pull-right">Создать нового пользователя</button>
+                <button id="btnAdd" type="button" class="btn btn-default pull-right">Новая заявка</button>
                 <input value = "+ * users" type="button" id="btnUpdateUsers" class="btn btn-default"/>
                 <table id="grid2" class="table table-sortable"></table> 
             </div>
@@ -63,7 +63,110 @@
             © AVTOBOTS PRODUCTION 2022
         </footer>  
 
+        <div id="dialogCreate" style="display: none" class="container">
+        <form>       
+    <div class="col-xs-6">
+            <div class="form-group">
+                <label for="num_carC">Номер машины</label>
+                <input type="text" class="form-control" id="num_carC" name="num_car" value="">
+            </div>
+            <div class="form-group">
+                <label for="modelC">Марка машины</label>
+                <input type="text" class="form-control" id="modelC" name="model"  value="">
+            </div>
+            <div class="form-group">
+                <label for="add_infoC">Адрес</label>
+                <input type="text" class="form-control" id="add_infoC" name="add_info"  value="">
+            </div>
+            <div class="form-group">
+                <label for="commentC">Коментарий</label>
+                <input type="text" class="form-control" id="commentC" name="comment"  value="">
+            </div>
+            <div class="form-group">
+                <label for="approved">Одобрение</label>
+                <select name="approved" class="form-control" id="approved">
+                    <option value="1">Одобрено</option>
+                    <option value="2">Отклонено</option>
+                    <option value="0">Ожидает</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="id_userC">ID пользователя</label>
+                <input type="text" class="form-control" id="id_userC" name="id_userC"  value="">
+            </div>
+            <div class="form-group">
+                <label for="ownerC">Принадлежность</label>
+                <select class="form-control"  id="ownerC" name="owner">
+                    <option value="1">Личная</option>
+                    <option value="2">Гостевая</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row">
+          
+            <button type="button" id="btnCreateUser" class="btn btn-default">Сохранить</button>
+            <button type="button" id="btnCreateCancel" class="btn btn-default">Отменить</button>
+
+        </div>    
+
+        </form>
+    </div>
+
+
+
+        <div id="dialog" style="display: none">
+        <form>
+            <div>
+                <label for="id_reg_car">ID машины</label>
+                <input type="text" class="form-control" id="id_reg_car" name="id_reg_car" value="">
+            </div>
+            <div>
+                <label for="num_car">Номер машины</label>
+                <input type="text" class="form-control" id="num_car" name="num_car" value="">
+            </div>
+            <div>
+                <label for="model">Марка машины</label>
+                <input type="text" class="form-control" id="model" name="model"  value="">
+            </div>
+            <div>
+                <label for="add_info">Адрес</label>
+                <input type="text" class="form-control" id="add_info" name="add_info"  value="">
+            </div>
+            <button type="button" id="btnSave" class="btn btn-default">Сохранить</button>
+            <button type="button" id="btnCancel" class="btn btn-default">Отменить</button>
+        </form>
+
+
         <script type="text/javascript">
+        $.ajaxSetup({
+                headers : {
+                    'X-CSRF-Token' : "{{ csrf_token() }}"
+                }
+            });
+            var grid, dialog, dialogCreate;
+            function CreateNew(e) {
+                var record = {
+                num_car: $('#num_carC').val(),
+                model: $('#modelC').val(),
+                add_info: $('#add_infoC').val(),
+                comment: $('#commentC').val(),
+                approved: $('#approved').val(),
+                id_user: $('#id_userC').val(),
+                owner: $('#ownerC').val()                
+            };
+            $.ajax({ url: '/reg_cars/create', data: record , method: 'POST' })
+                .done(function () {
+                    dialogCreate.close();
+                    alert('Заявка успешно создана');
+                    grid.reload();
+                })
+                .fail(function () {
+                    alert('Failed to save.');
+                    dialogCreate.close();
+                }
+            );
+        }
         var grid;
         function Dob(e) {
                 $.ajaxSetup({
@@ -123,18 +226,84 @@
                 }
             }
 
-        function Deleete(e) {
-                if (confirm('Вы уверены')) {
-                    $.ajax({ url: '/reg_cars/delete', data: { id: e.data.id }, method: 'POST' })
+            function Deleete(e) {
+                $.ajaxSetup({
+                    headers : {
+                        'X-CSRF-Token' : "{{ csrf_token() }}"
+                    }
+                });
+                if (confirm('Вы уверены?')) {
+                
+
+                    $.ajax({url: '/reg_cars/delete', data: { id_reg_car: e.data.record.id_reg_car }, method: 'POST' })
                         .done(function () {
-                            alert('Выполнено.');
+                            alert('Вы удалили');
                             grid.reload();
                         })
                         .fail(function () {
-                            alert('Отказ в удалении.');
+                            alert('Ошибка удаления.');
                         });
                 }
             }
+
+
+            var grid, dialog;
+        function Chg(e) {
+       
+           $('#id_reg_car').val(e.data.record.id_reg_car);
+            $('#num_car').val(e.data.record.num_car);
+            $('#model').val(e.data.record.model);
+            $('#add_info').val(e.data.record.add_info);
+            $('#comment').val(e.data.record.comment);
+            $('#owner').val(e.data.record.owner);
+            dialog.open('Изменение данных о машине');
+        }
+
+            function Save() {
+            var record = {
+                id_reg_car: $('#id_reg_car').val(),
+                num_car: $('#num_car').val(),
+                model: $('#model').val(),
+                add_info: $('#add_info').val(),
+                comment: $('#comment').val(),
+                owner: $('#owner').val()
+            };
+            $.ajax({ url: '/reg_cars/update', data: record , method: 'POST' })
+                .done(function () {
+                    dialog.close();
+                    grid.reload();
+                })
+                .fail(function () {
+                    alert('Failed to save.');
+                    dialog.close();
+                });
+        }
+
+            let timerId1 = setInterval(() => {
+
+            var xhr1 = new XMLHttpRequest()
+            xhr1.open('GET', 'reg_cars/getCount', true)
+            xhr1.send()
+
+            xhr1.onreadystatechange = function() {
+                if (xhr1.readyState != 4) {
+                    return
+            }
+
+            var UsersCount1 = JSON.parse(xhr1.responseText)   
+            var newUsersCount1 = UsersCount1.count - grid.count(true)
+            $('#btnUpdateUsers1').val("+ " + newUsersCount1)
+            if (xhr1.status === 200) {
+                    console.log('result', xhr1.responseText)
+                } else {
+                    console.log('err', xhr1.responseText)
+                }
+            }            
+            }, 2000);
+
+            $('#btnUpdateUsers1').on('click', function () {
+                grid.reload();
+            });
 
             let timerId = setInterval(() => {
 
@@ -176,19 +345,68 @@
                     { field: 'id_user', title: 'id пользователя', hidden: true},
                     { field: 'owner', width: 140, title: 'Собственность', sortable: true},
                     { field: 'comment', title: 'Коментарий'},
-                    { field: 'approved', width: 115, title: 'Одобрение', sortable: true},
+                    { field: 'approved',
+                    renderer: (value) => {
+                        switch (value) {
+                            case 0:
+                                return "Ожидает";
+                                break;
+                            case 1:
+                                return "Одобрено";
+                                break;
+                            case 2:
+                                return "Отклонено";
+                                break;
+                        }
+                    },  title: 'Одобрение', sortable: true },
                     { title: '', field: '', width: 35, type: 'icon', icon: 'glyphicon-plus', tooltip: 'Одобрить', events: { 'click': Dob} },
                     { title: '', field: '', width: 35, type: 'icon', icon: 'glyphicon-minus', tooltip: 'Отклонить', events: { 'click': Del } },
-                    { title: '', field: 'Edit', width: 35, type: 'icon', icon: 'glyphicon-pencil', tooltip: 'Редактировать', events: { 'click': Dob } },
-                    { title: '', field: 'Delete', width: 35, type: 'icon', icon: 'glyphicon-remove', tooltip: 'удалить', events: { 'click': Deleete } }
+                    { title: '', field: '', width: 35, type: 'icon', icon: 'glyphicon-remove', tooltip: 'Удалить', events: { 'click': Deleete } },
+                    { title: '', field: '', width: 35, type: 'icon', icon: 'glyphicon-pencil', tooltip: 'Изменить', events: { 'click': Chg} }
                   
                 ],
                 dataSource: '/reg_cars/',
                 sort: true,
                 pager: { limit: 5, sizes: [2, 5, 10, 20] }
             });
+            dialog = $('#dialog').dialog({
+                uiLibrary: 'bootstrap',
+                autoOpen: false,
+                resizable: false,
+                modal: true
+                
+            });
+            dialogCreate = $('#dialogCreate').dialog({
+                uiLibrary: 'bootstrap',
+                autoOpen: false,
+                resizable: true,
+                modal: true,
+                width:'720'
+            });
+            $('#btnAdd').on('click', function () {
+                $('#nameC').val('');
+                $('#surnameC').val('');
+                $('#patronymicC').val('');
+                $('#phone_numberC').val('');
+                $('#addressC').val('');
+                $('#telegram_idC').val('');
+                $('#approvedC').val('');
+                $('#roleC').val('');
+                $('#emailC').val('');
+                $('#passwordC').val('');
+                $('#role_idC').val('');
+                dialogCreate.open('Новая заявка');
+            });
+            $('#btnSave').on('click', Save);
+            $('#btnCancel').on('click', function () {
+                dialog.close();
+            });
             $('#btnSearch').on('click', function () {
                 grid.reload({ page: 1, num_car: $('#txtNumCar').val(), dateTime_order: $('#txtdateTime').val()});
+            });
+            $('#btnCreateUser').on('click', CreateNew);
+            $('#btnCreateCancel').on('click', function(){
+                dialogCreate.close();
             });
             $('#btnClear').on('click', function () {
                 $('#id_reg_car').val('');

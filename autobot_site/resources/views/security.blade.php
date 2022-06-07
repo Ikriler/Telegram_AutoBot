@@ -96,7 +96,7 @@
             </div>
             <div class="form-group">
                 <label for="ownerC">Принадлежность</label>
-                <select class="form-control"  id="ownerC" name="owner">
+                <select class="form-control"  id="owner" name="ownerC">
                     <option value="1">Личная</option>
                     <option value="2">Гостевая</option>
                 </select>

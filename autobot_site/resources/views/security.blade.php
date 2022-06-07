@@ -54,7 +54,7 @@
                 <button id="btnSearch" type="button" class="btn btn-default">Поиск</button>
                 <button id="btnClear" type="button" class="btn btn-default">Очистить</button>
             </div>
-                <button id="btnAdd" type="button" class="btn btn-default pull-right">Новая заявка</button>
+                <button id="btnAdd" type="button">Новая заявка</button>
                 <input value = "+ * users" type="button" id="btnUpdateUsers" class="btn btn-default"/>
                 <table id="grid2" class="table table-sortable"></table> 
             </div>
@@ -115,11 +115,11 @@
 
 
 
-        <div id="dialog" style="display: none">
+    <div id="dialog" style="display: none">
         <form>
             <div>
                 <label for="id_reg_car">ID машины</label>
-                <input type="text" class="form-control" id="id_reg_car" name="id_reg_car" value="">
+                <input type="text" class="form-control" id="id_reg_car" name="id_reg_car" value="" disabled>
             </div>
             <div>
                 <label for="num_car">Номер машины</label>
@@ -132,6 +132,17 @@
             <div>
                 <label for="add_info">Адрес</label>
                 <input type="text" class="form-control" id="add_info" name="add_info"  value="">
+            </div>
+            <div class="form-group">
+                <label for="comment">Коментарий</label>
+                <input type="text" class="form-control" id="comment" name="comment"  value="">
+            </div>
+            <div class="form-group">
+            <label for="ownerC">Принадлежность</label>
+                <select class="form-control"  id="ownerC" name="owner">
+                    <option value="1">Личная</option>
+                    <option value="2">Гостевая</option>
+                </select>
             </div>
             <button type="button" id="btnSave" class="btn btn-default">Сохранить</button>
             <button type="button" id="btnCancel" class="btn btn-default">Отменить</button>
@@ -255,7 +266,7 @@
             $('#model').val(e.data.record.model);
             $('#add_info').val(e.data.record.add_info);
             $('#comment').val(e.data.record.comment);
-            $('#owner').val(e.data.record.owner);
+            $('#ownerC').val(e.data.record.owner);
             dialog.open('Изменение данных о машине');
         }
 
@@ -266,7 +277,7 @@
                 model: $('#model').val(),
                 add_info: $('#add_info').val(),
                 comment: $('#comment').val(),
-                owner: $('#owner').val()
+                owner: $('#ownerC').val()
             };
             $.ajax({ url: '/reg_cars/update', data: record , method: 'POST' })
                 .done(function () {
@@ -343,7 +354,17 @@
                     { field: 'add_info', title: 'Адрес', sortable: true},
                     { field: 'id_reg_car', title: 'id машины', hidden: true},
                     { field: 'id_user', title: 'id пользователя', hidden: true},
-                    { field: 'owner', width: 140, title: 'Собственность', sortable: true},
+                    { field: 'owner',
+                    renderer: (value) => {
+                        switch (value) {
+                            case 1:
+                                return "Личная";
+                                break;
+                            case 2:
+                                return "Гостевая";
+                                break;
+                        }
+                    },  title: 'Собственность', sortable: true },
                     { field: 'comment', title: 'Коментарий'},
                     { field: 'approved',
                     renderer: (value) => {
@@ -417,7 +438,7 @@
                 $('#comment').val('');
                 $('#approved').val('');
                 $('#id_user').val('');
-                $('#owner').val('');
+                $('#ownerC').val('');
                 grid.reload({ id_reg_car: '', num_car: '', model: '', add_info: '', dateTime_order: '', comment: '', approved: '', id_user: '', owner: '' });
             });
         });

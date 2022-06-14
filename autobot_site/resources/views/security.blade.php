@@ -90,7 +90,7 @@
                 <input type="text" class="form-control" id="approved" name="approved" value="0" disabled>
             </div>
             <div class="form-group-2">
-                <<label for="id_userC">ID пользователя</label>
+                <label for="id_userC">ID пользователя</label>
                 <input type="text" class="form-control" id="id_userC" name="id_userC"  value="">
             </div>
                 <div class="form-group">

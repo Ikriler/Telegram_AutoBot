@@ -36,13 +36,13 @@
             <div class="col-xs-8">
                 <form class="form-inline">
                     <div class="form-group">
-                        <input id="txtName" type="text" placeholder="Name" class="form-control" />
+                        <input id="txtName" type="text" placeholder="Имя" class="form-control" />
                         <!-- <input id="txtSurname" type="text" placeholder="Surname" class="form-control" />
                         <input id="txtPatronymic" type="text" placeholder="Patronymic" class="form-control" />
                         <input id="txtPhone_number" type="text" placeholder="Phone number" class="form-control" />
                         <input id="txtTelegram_id" type="text" placeholder="Telegram ID" class="form-control" />
                         <input id="txtApproved" type="text" placeholder="Approved" class="form-control" /> -->
-                        <input id="txtEmail" type="text" placeholder="Email" class="form-control" />
+                        <input id="txtEmail" type="text" placeholder="Почта" class="form-control" />
                         <!-- <input id="txtPassword" type="text" placeholder="Password" class="form-control" />
                         <input id="txtRole" type="text" placeholder="Role" class="form-control" /> -->
                     </div>
@@ -64,49 +64,49 @@
     </div>
     <div id="dialogCreate" style="display: none">
         <form>
-            <div class="form-group">
-                <label for="name">Name</label>
+            <div class="form-group2">
+                <label for="name">Имя</label>
                 <input type="text" class="form-control" id="nameC">
             </div>
-            <div class="form-group">
-                <label for="surname">Surname</label>
+            <div class="form-group2">
+                <label for="surname">Фамилия</label>
                 <input type="text" class="form-control" id="surnameC">
             </div>
-            <div class="form-group">
-                <label for="patronymic">Patronymic</label>
+            <div class="form-group2">
+                <label for="patronymic">Отчество</label>
                 <input type="text" class="form-control" id="patronymicC">
             </div>
-            <div class="form-group">
-                <label for="phone_number">Phone number</label>
+            <div class="form-group2">
+                <label for="phone_number">Номер телефона</label>
                 <input type="text" class="form-control" id="phone_numberC">
             </div>
-            <div class="form-group">
-                <label for="address">Address</label>
+            <div class="form-group2">
+                <label for="address">Адрес</label>
                 <input type="text" class="form-control" id="addressC">
             </div>
-            <div class="form-group">
-                <label for="telegram_id">Telegram ID</label>
+            <div class="form-group2">
+                <label for="telegram_id">Телеграм</label>
                 <input type="text" class="form-control" id="telegram_idC">
             </div>
-            <div class="form-group">
-                <label for="approved">Approved</label>
+            <div class="form-group2">
+                <label for="approved">Одобрение</label>
                 <input type="text" class="form-control" id="approvedC">
             </div>
 
-            <div class="form-group">
-                <label for="email">Email</label>
+            <div class="form-group2">
+                <label for="email">Почта</label>
                 <input type="text" class="form-control" id="emailC" />
             </div>
-            <div class="form-group">
-                <label for="password">Password</label>
+            <div class="form-group2">
+                <label for="password">Пароль</label>
                 <input type="text" class="form-control" id="passwordC" />
             </div>
-            <div class="form-group">
-                <label for="role_id">Role ID</label>
+            <div class="form-group2">
+                <label for="role_id">Роль</label>
                 <input type="text" class="form-control" id="role_idC" />
             </div>
-            <button type="button" id="btnCreateUser" class="btn btn-default">Create</button>
-            <button type="button" id="btnCreateCancel" class="btn btn-default">Cancel</button>
+            <button type="button" id="btnCreateUser" class="btn btn-default">Сохранить</button>
+            <button type="button" id="btnCreateCancel" class="btn btn-default">Отменить</button>
             
         </form>
     </div>
@@ -114,48 +114,52 @@
     <div id="dialog" style="display: none">
         <input type="hidden" id="id_user" />
         <form>
-            <div class="form-group">
-                <label for="name">Name</label>
+            <div class="form-group2">
+                <label for="name">Имя</label>
                 <input type="text" class="form-control" id="name">
             </div>
-            <div class="form-group">
-                <label for="surname">Surname</label>
+            <div class="form-group2">
+                <label for="surname">Фамилия</label>
                 <input type="text" class="form-control" id="surname">
             </div>
-            <div class="form-group">
-                <label for="patronymic">Patronymic</label>
+            <div class="form-group2">
+                <label for="patronymic">Отчество</label>
                 <input type="text" class="form-control" id="patronymic">
             </div>
-            <div class="form-group">
-                <label for="phone_number">Phone number</label>
+            <div class="form-group2">
+                <label for="phone_number">Номер телефона</label>
                 <input type="text" class="form-control" id="phone_number">
             </div>
-            <div class="form-group">
-                <label for="address">Address</label>
+            <div class="form-group2">
+                <label for="address">Адрес</label>
                 <input type="text" class="form-control" id="address">
             </div>
-            <div class="form-group">
-                <label for="telegram_id">Telegram ID</label>
+            <div class="form-group2">
+                <label for="telegram_id">Телеграм</label>
                 <input type="text" class="form-control" id="telegram_id">
             </div>
-            <div class="form-group">
-                <label for="approved">Approved</label>
+            <div class="form-group2">
+                <label for="approved">Одобрение</label>
                 <input type="text" class="form-control" id="approved">
             </div>
-            <div class="form-group">
-                <label for="email">Email</label>
+            <div class="form-group2">
+                <label for="email">Почта</label>
                 <input type="text" class="form-control" id="email" />
             </div>
-            <div class="form-group">
-                <label for="password">Password</label>
+            <div class="form-group2">
+                <label for="password">Пароль</label>
                 <input type="text" class="form-control" id="password" />
             </div>
-            <div class="form-group">
-                <label for="role">Role ID</label>
+            <div class="form-group2">
+                <label for="role">Роль</label>
                 <input type="text" class="form-control" id="role" />
             </div>
-            <button type="button" id="btnSave" class="btn btn-default">Save</button>
-            <button type="button" id="btnCancel" class="btn btn-default">Cancel</button>
+            <div class="form-group2">
+                <button type="button" id="btnSave" class="btn btn-default">Создать</button>
+                <button type="button" id="btnCancel" class="btn btn-default">Отменить</button>
+            </div>
+            
+           
         </form>
     </div>
     <div class="footer">
@@ -206,7 +210,7 @@
                     grid.reload();
                 })
                 .fail(function () {
-                    alert('Failed to save.');
+                    alert('Ошибка сохранения');
                     dialogCreate.close();
                 });
         }
@@ -230,18 +234,18 @@
                     grid.reload();
                 })
                 .fail(function () {
-                    alert('Failed to save.');
+                    alert('Ошибка сохранения');
                     dialog.close();
                 });
         }
         function Delete(e) {
-            if (confirm('Are you sure?')) {
+            if (confirm('Вы уверены?')) {
                 $.ajax({ url: '/users/delete', data: { id_user: e.data.record.id_user }, method: 'POST' })
                     .done(function () {
                         grid.reload();
                     })
                     .fail(function () {
-                        alert('Failed to delete.');
+                        alert('Ошибка удаления');
                     });
             }
         }
@@ -285,7 +289,7 @@
                     { field: 'patronymic', title: 'Отчетство', sortable: true },
                     { field: 'phone_number', title: 'Номер телефона', sortable: true },
                     { field: 'address', title: 'Адрес', sortable: true },
-                    { field: 'telegram_id', title: 'Код тг', sortable: true },
+                    { field: 'telegram_id', title: 'Телеграм', sortable: true },
                     { field: 'approved',
                     renderer: (value) => {
                         switch (value) {
@@ -293,18 +297,18 @@
                                 return "Ожидает";
                                 break;
                             case 1:
-                                return "Одобрен";
+                                return "Одобрено";
                                 break;
                             case 2:
-                                return "Забанен";
+                                return "Отклонено";
                                 break;
                         }
                     },  title: 'Одобрение', sortable: true },
                     { field: 'name_role', title: 'Роль', sortable: true },
-                    { field: 'email', title: 'Email', sortable: true },
+                    { field: 'email', title: 'Почта', sortable: true },
                     { field: 'password', title: 'Пароль', sortable: true },
-                    { title: '', field: 'Edit', width: 34, type: 'icon', icon: 'glyphicon-pencil', tooltip: 'Edit', events: { 'click': Edit } },
-                    { title: '', field: 'Delete', width: 34, type: 'icon', icon: 'glyphicon-remove', tooltip: 'Delete', events: { 'click': Delete } }
+                    { title: '', field: 'Edit', width: 34, type: 'icon', icon: 'glyphicon-pencil', tooltip: 'Редактировать', events: { 'click': Edit } },
+                    { title: '', field: 'Delete', width: 34, type: 'icon', icon: 'glyphicon-remove', tooltip: 'Удалить', events: { 'click': Delete } }
                 ],
                 pager: { limit: 5, sizes: [2, 5, 10, 20] }
             });

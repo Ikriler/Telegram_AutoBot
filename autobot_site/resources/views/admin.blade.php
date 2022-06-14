@@ -176,7 +176,7 @@
                             'X-CSRF-Token' : "{{ csrf_token() }}"
                         }
                     });
-                    if (confirm('Are you sure?')) {
+                    if (confirm('Вы уверены?')) {
                         var record = {
                             id_user: e.data.record.id_user,
                             name: e.data.record.name,
@@ -189,11 +189,11 @@
                         };
                         $.ajax({ url: '/users/update', data: record, method: 'POST' })  
                         .done(function () {
-                            alert('Nice.');
+                            alert('Выполнено');
                             grids.reload();
                         })
                         .fail(function () {
-                            alert('Failed to save.');
+                            alert('Ошибка сохранения.');
                         });
                     }
                 }
@@ -203,7 +203,7 @@
                             'X-CSRF-Token' : "{{ csrf_token() }}"
                         }
                     });
-                    if (confirm('Are you sure?')) {
+                    if (confirm('Вы уверены?')) {
                         var record = {
                             id_user: e.data.record.id_user,
                             name: e.data.record.name,
@@ -216,11 +216,11 @@
                         };
                         $.ajax({ url: '/users/update', data: record, method: 'POST' })  
                         .done(function () {
-                            alert('Nice.');
+                            alert('Выполнено');
                             grids.reload();
                         })
                         .fail(function () {
-                            alert('Failed to save.');
+                            alert('Ошибка сохранения!');
                         });
                     }
                 }

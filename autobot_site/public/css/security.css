@@ -307,14 +307,15 @@ tr:hover{
 }
 
 #btnCreateUser{
+    margin-top: 10px;
     width: 100px;
     margin-left: 10px;
 }
 
 #btnCreateCancel{
     width: 100px;
-    margin-left: 140px;
-    margin-top: -50px;
+    margin-left: 10px;
+    margin-top: 7px;
 }
 
 #dialog{
@@ -328,6 +329,7 @@ tr:hover{
 }
 
 #btnSave{
+    margin-top: 10px;
     width: 100px;
     margin-left: 10px;
     
@@ -336,7 +338,14 @@ tr:hover{
 #btnCancel{
     width: 100px;
     margin-left: 140px;
-    margin-top: 0px;
+
+    margin-top: -50px;
+}
+
+#btnCreateUser{
+    margin-top: 10px;
+    width: 100px;
+    margin-left: 10px;
 }
 
 #btnAdd{
@@ -352,14 +361,9 @@ tr:hover{
     margin-top: -69px;
 }
 
-.dialogCreate{
+#dialogCreate{
     background: #2b5378b9;
     color:#FFFFFF;
-    height: auto;
-    left: 498px;
-    top: 17px;
-    position: fixed;
-    width: 378px;
     
 }
 
@@ -400,7 +404,7 @@ tr:hover{
 .d-flex {
     display: flex;
 }
-#form-control-2 {
+.form-control-2 {
     display: block;
     width: 378px;
     height: 34px;

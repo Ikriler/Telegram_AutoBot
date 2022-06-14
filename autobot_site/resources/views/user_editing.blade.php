@@ -62,6 +62,11 @@
             </div>
         </div>
     </div>
+    <div class="footer">
+            <footer>
+                © AVTOBOTS PRODUCTION 2022
+            </footer>
+    </div>
     <div id="dialogCreate" style="display: none">
         <form>
             <div class="form-group2">
@@ -171,11 +176,8 @@
            
         </form>
     </div>
-    <div class="footer">
-            <footer>
-                © AVTOBOTS PRODUCTION 2022
-            </footer>
-        </div>
+    
+
     
 
         <script type="text/javascript">
@@ -198,7 +200,7 @@
 
             $('#email').val(e.data.record.email);
             $('#password').val(e.data.record.password);
-            dialog.open('Edit user');
+            dialog.open('Редактирование заявки');
         }
         function Create() {
             var record = {
@@ -362,7 +364,7 @@
                 $('#emailC').val('');
                 $('#passwordC').val('');
                 $('#roleC').val('');
-                dialogCreate.open('Add user');
+                dialogCreate.open('Новый пользователь');
             });
             $('#btnSave').on('click', Save);
             $('#btnCancel').on('click', function () {

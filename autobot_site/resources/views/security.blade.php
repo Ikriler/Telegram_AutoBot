@@ -63,26 +63,26 @@
             © AVTOBOTS PRODUCTION 2022
         </footer>  
 
-        <div id="dialogCreate" style="display: none" class="container">
-        <form>       
-    <div class="col-xs-6">
-            <div class="form-group">
+        <div id="dialogCreate">
+        <div>       
+    <div >
+            <div class="form-group-2">
                 <label for="num_carC">Номер машины</label>
                 <input type="text" class="form-control" id="num_carC" name="num_car" value="">
             </div>
-            <div class="form-group">
+            <div class="form-group-2">
                 <label for="modelC">Марка машины</label>
                 <input type="text" class="form-control" id="modelC" name="model"  value="">
             </div>
-            <div class="form-group">
+            <div class="form-group-2">
                 <label for="add_infoC">Адрес</label>
                 <input type="text" class="form-control" id="add_infoC" name="add_info"  value="">
             </div>
-            <div class="form-group">
+            <div class="form-group-2">
                 <label for="commentC">Коментарий</label>
                 <input type="text" class="form-control" id="commentC" name="comment"  value="">
             </div>
-            <div class="form-group">
+            <div class="form-group-2">
                 <label for="approved">Одобрение</label>
                 <!-- <select name="approved" class="form-control" id="approved">
                     <option value="1">Одобрено</option>
@@ -91,27 +91,25 @@
                 </select> -->
                 <input type="text" class="form-control" id="approved" name="approved" value="0" disabled>
             </div>
-            <div class="form-group">
+            <div class="form-group-2">
                 <label for="id_userC">ID пользователя</label>
                 <input type="text" class="form-control" id="id_userC" name="id_userC"  value="">
             </div>
-            <div class="form-group">
+            <div class="form-group-2">
                 <label for="ownerC">Принадлежность</label>
                 <select class="form-control"  id="owner" name="ownerC">
                     <option value="1">Личная</option>
                     <option value="2">Гостевая</option>
                 </select>
             </div>
-        </div>
-
-        <div class="row">
+        
           
             <button type="button" id="btnCreateUser" class="btn btn-default">Сохранить</button>
             <button type="button" id="btnCreateCancel" class="btn btn-default">Отменить</button>
 
         </div>    
 
-        </form>
+</div>
     </div>
 
 

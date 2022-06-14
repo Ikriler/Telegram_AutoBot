@@ -174,7 +174,7 @@
                     grid.reload();
                 })
                 .fail(function () {
-                    alert('Failed to save.');
+                    alert('Ошибка сохранения.');
                     dialogCreate.close();
                 }
             );
@@ -249,7 +249,7 @@
 
                     $.ajax({url: '/reg_cars/delete', data: { id_reg_car: e.data.record.id_reg_car }, method: 'POST' })
                         .done(function () {
-                            alert('Вы удалили');
+                            alert('Удалено.');
                             grid.reload();
                         })
                         .fail(function () {

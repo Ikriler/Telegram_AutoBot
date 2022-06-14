@@ -65,26 +65,34 @@
 
         <div id="dialogCreate" style="display: none">
             <form>
-                <div>
+                <!-- <div>
                     <label for="id_reg_car">ID машины</label>
                     <input type="text" class="form-control" id="id_reg_car" name="id_reg_car" value="" disabled>
+                </div> -->
+                <div>
+                    <label for="num_carC">Номер машины</label>
+                    <input type="text" class="form-control" id="num_carC" name="num_car" value="">
                 </div>
                 <div>
-                    <label for="num_car">Номер машины</label>
-                    <input type="text" class="form-control" id="num_car" name="num_car" value="">
+                    <label for="modelC">Марка машины</label>
+                    <input type="text" class="form-control" id="modelC" name="model"  value="">
                 </div>
                 <div>
-                    <label for="model">Марка машины</label>
-                    <input type="text" class="form-control" id="model" name="model"  value="">
-                </div>
-                <div>
-                    <label for="add_info">Адрес</label>
-                    <input type="text" class="form-control" id="add_info" name="add_info"  value="">
+                    <label for="add_infoC">Адрес</label>
+                    <input type="text" class="form-control" id="add_infoC" name="add_info"  value="">
                 </div>
                 <div class="form-group">
-                    <label for="comment">Коментарий</label>
-                    <input type="text" class="form-control" id="comment" name="comment"  value="">
+                    <label for="commentC">Коментарий</label>
+                    <input type="text" class="form-control" id="commentC" name="comment"  value="">
                 </div>
+                <div class="form-group-2">
+                <label for="approved">Одобрение</label>
+                <input type="text" class="form-control" id="approved" name="approved" value="0" disabled>
+            </div>
+            <div class="form-group-2">
+                <<label for="id_userC">ID пользователя</label>
+                <input type="text" class="form-control" id="id_userC" name="id_userC"  value="">
+            </div>
                 <div class="form-group">
                 <label for="ownerC">Принадлежность</label>
                     <select class="form-control"  id="ownerC" name="owner">

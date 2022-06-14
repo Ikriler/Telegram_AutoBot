@@ -45,9 +45,9 @@ Route::get('usersList', function() {
     return view("usersList");
 })->name("usersList")->middleware('role');
 
-Route::get('UserReportFilter', function() {
-    return view("UserReportFilter")->middleware('role');
-});
+Route::get('UserReportFilter', function () {
+    return view('UserReportFilter');
+})->name('UserReportFilter')->middleware('role');
 
 Route::post('login', [AuthController::class, 'login'])->name("login");
 

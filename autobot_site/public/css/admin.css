@@ -373,9 +373,7 @@ tr:hover{
 
 #btnCreateCancel{
     width: 100px;
-    margin-left: 140px;
-
-    margin-top: -50px;
+    margin-left: 10px;
 }
 
 
@@ -394,13 +392,12 @@ tr:hover{
 #btnSave{
     width: 100px;
     margin-left: 10px;
-    
+    margin-top: 10px;
 }
 
 #btnCancel{
     width: 100px;
-    margin-left: 140px;
-    margin-top: -50px;
+    margin-top: 10px;
 }
 
 #btnAdd{
@@ -414,3 +411,4 @@ tr:hover{
     border: #2B5378; 
     font-size:18px;
 }
+

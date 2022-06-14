@@ -22,7 +22,7 @@
                     </div>
                     <!-- <p class="text1">«Автобот»</p> -->
                     <nav class="header-nav">
-                        <a href="/user_editing">Редактироваие пользователя      |</a>
+                        <a href="/user_editing">Редактирование пользователя      |</a>
                         <a href="/UserReportFilter">Отчёт заявок пользователей      |</a>
                         <a href="/RegCarsFilter">Отчёт заявок на въезд      |</a>
                         <a href="/">  Выход</a>
@@ -163,10 +163,12 @@
                     <option value="1">Личная</option>
                     <option value="2">Гостевая</option>
                 </select>
-            </div>
-            <button type="button" id="btnSave" class="btn btn-default">Сохранить</button>
+                <button type="button" id="btnSave" class="btn btn-default">Сохранить</button>
             <button type="button" id="btnCancel" class="btn btn-default">Отменить</button>
+            </div>
+            
         </form>
+        </div>
 
         <script type="text/javascript">
             var grids;

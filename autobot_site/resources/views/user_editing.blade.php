@@ -89,8 +89,10 @@
                 <input type="text" class="form-control" id="telegram_idC">
             </div>
             <div class="form-group2">
-                <label for="approved">Одобрение</label>
-                <input type="text" class="form-control" id="approvedC">
+            <label for="role">Одобрение</label>
+                    <select class="form-control" name="approved" id="approvedC">
+                        <option value="0">Ожидает</option>
+                    </select>
             </div>
 
             <div class="form-group2">
@@ -102,8 +104,12 @@
                 <input type="text" class="form-control" id="passwordC" />
             </div>
             <div class="form-group2">
-                <label for="role_id">Роль</label>
-                <input type="text" class="form-control" id="role_idC" />
+                <label for="role">Роль</label>
+                    <select class="form-control" name="role" id="roleC">
+                        <option value="1">Житель</option>
+                        <option value="2">Админ</option>
+                        <option value="3">Охранник</option>
+                    </select>
             </div>
             <button type="button" id="btnCreateUser" class="btn btn-default">Сохранить</button>
             <button type="button" id="btnCreateCancel" class="btn btn-default">Отменить</button>
@@ -140,7 +146,7 @@
             </div>
             <div class="form-group2">
                 <label for="approved">Одобрение</label>
-                <input type="text" class="form-control" id="approved">
+                <input type="text" class="form-control" id="approved" name="approved" value="0" disabled>
             </div>
             <div class="form-group2">
                 <label for="email">Почта</label>
@@ -152,13 +158,16 @@
             </div>
             <div class="form-group2">
                 <label for="role">Роль</label>
-                <input type="text" class="form-control" id="role" />
+                    <select class="form-control" id="role">
+                        <option value="1">Житель</option>
+                        <option value="2">Админ</option>
+                        <option value="3">Охранник</option>
+                    </select>
             </div>
             <div class="form-group2">
                 <button type="button" id="btnSave" class="btn btn-default">Создать</button>
                 <button type="button" id="btnCancel" class="btn btn-default">Отменить</button>
             </div>
-            
            
         </form>
     </div>
@@ -202,7 +211,7 @@
                 address: $('#addressC').val(),
                 telegram_id: $('#telegram_idC').val(),
                 approved: $('#approvedC').val(),
-                id_role: $('#role_idC').val()
+                id_role: $('#roleC').val()
             };
             $.ajax({ url: '/users/create', data: record , method: 'POST' })
                 .done(function () {
@@ -226,7 +235,7 @@
                 address: $('#address').val(),
                 telegram_id: $('#telegram_id').val(),
                 approved: $('#approved').val(),
-                id_role: $('#role_id').val()
+                id_role: $('#role').val()
             };
             $.ajax({ url: '/users/update', data: record , method: 'POST' })
                 .done(function () {
@@ -304,7 +313,24 @@
                                 break;
                         }
                     },  title: 'Одобрение', sortable: true },
-                    { field: 'name_role', title: 'Роль', sortable: true },
+                    // { field: 'name_role', title: 'Роль', sortable: true },
+
+                    { field: 'name_role',
+                    renderer: (value) => {
+                        switch (value) {
+                            case "liver":
+                                return "Житель";
+                                break;
+                            case "admin":
+                                return "Админ";
+                                break;
+                            case "guard":
+                                return "Охранник";
+                                break;
+                        }
+                    },  title: 'Роль', sortable: true },
+
+
                     { field: 'email', title: 'Почта', sortable: true },
                     { field: 'password', title: 'Пароль', sortable: true },
                     { title: '', field: 'Edit', width: 34, type: 'icon', icon: 'glyphicon-pencil', tooltip: 'Редактировать', events: { 'click': Edit } },
@@ -335,7 +361,7 @@
                 $('#roleC').val('');
                 $('#emailC').val('');
                 $('#passwordC').val('');
-                $('#role_idC').val('');
+                $('#roleC').val('');
                 dialogCreate.open('Add user');
             });
             $('#btnSave').on('click', Save);
@@ -366,7 +392,7 @@
                 $('#role').val('');
                 $('#email').val('');
                 $('#password').val('');
-                $('#role_id').val('');
+                $('#role').val('');
                 grid.reload({ name: '', surname: '', patronymic: '', phone_number: '', telegram_id: '', approved: '', email: '', password: '', role_id: '' });
             });
         });

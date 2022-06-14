@@ -33,10 +33,10 @@ Route::get('user_editing', function () {
     return view('user_editing');
 })->name('user_editing')->middleware('role');
 
-Route::post('users/update', [UserController::class, 'update'])->middleware('admin');
-Route::post('users/delete', [UserController::class, 'destroy'])->middleware('admin');
-Route::post('users/create', [UserController::class, 'store'])->middleware('admin');
-Route::get('users/index', [UserController::class, 'index'])->middleware('admin');
+Route::post('users/update', [UserController::class, 'update'])->middleware('role');
+Route::post('users/delete', [UserController::class, 'destroy'])->middleware('role');
+Route::post('users/create', [UserController::class, 'store'])->middleware('role');
+Route::get('users/index', [UserController::class, 'index'])->middleware('role');
 Route::get('users/testData', [UserController::class, 'addFiveRandomUsers'])->middleware('role');
 Route::get('users/getCount', [UserController::class, 'getUsersCount'])->middleware('role');
 Route::get('reg_cars/getCount', [RegCarsController::class, 'getCarsCount'])->middleware('role');

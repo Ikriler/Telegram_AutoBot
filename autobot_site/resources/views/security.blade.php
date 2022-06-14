@@ -84,11 +84,12 @@
             </div>
             <div class="form-group">
                 <label for="approved">Одобрение</label>
-                <select name="approved" class="form-control" id="approved">
+                <!-- <select name="approved" class="form-control" id="approved">
                     <option value="1">Одобрено</option>
                     <option value="2">Отклонено</option>
                     <option value="0">Ожидает</option>
-                </select>
+                </select> -->
+                <input type="text" class="form-control" id="approved" name="approved" value="0" disabled>
             </div>
             <div class="form-group">
                 <label for="id_userC">ID пользователя</label>

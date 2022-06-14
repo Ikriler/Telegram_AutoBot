@@ -30,17 +30,17 @@
                 </div>
             </header>
             
-            <form action="{{ route('userManage') }}" method="GET">
+            <!-- <form action="{{ route('userManage') }}" method="GET">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                 <button type="submit">Управление пользователями</button>
             </form>
             
                <form action="{{ route('newregcar') }}"  method="GET">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}" />
-                <!-- <button type="submit">Управление  машинами</button>
-            </form> -->
+                 <button type="submit">Управление  машинами</button>
+            </form> 
                 <button type="submit">Управление машинами</button>
-            </form>
+            </form> -->
             
             <form class=formtable>
                 <!-- <div class="text2">
@@ -121,12 +121,13 @@
                     <option value="2">Гостевая</option>
                 </select>
             </div>
+            <button type="button" id="btnCreateUser" class="btn btn-default">Сохранить</button>
+            <button type="button" id="btnCreateCancel" class="btn btn-default">Отменить</button>
         </div>
 
         <div class="row">
           
-            <button type="button" id="btnCreateUser" class="btn btn-default">Сохранить</button>
-            <button type="button" id="btnCreateCancel" class="btn btn-default">Отменить</button>
+           
 
         </div>    
 

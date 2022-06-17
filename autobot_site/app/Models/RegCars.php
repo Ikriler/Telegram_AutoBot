@@ -118,10 +118,10 @@ class RegCars extends Model
     }
 
     
-    public function setIdUser(id_user $id_user)
+    public function setIdUser($id_user)
     {
-        if($id_user == null ||!$id_user->exists || $id_user == '') return;
-        $this->attributes['id_user'] = $id_user->getId();
+        if($id_user == null || $id_user == '') return;
+        $this->attributes['id_user'] = $id_user;
     }
 
     

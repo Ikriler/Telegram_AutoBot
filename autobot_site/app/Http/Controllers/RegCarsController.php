@@ -27,7 +27,7 @@ class RegCarsController extends Controller
         //$paginate = RegCars::with('user')->get()->orderBy($request->input('sortBy') ?? 'reg_cars.id_reg_car', $request->input('direction') ?? 'desc');;
 
         $paginate = DB::table('reg_cars')
-        ->join('users', 'users.id_user', '=', 'reg_cars.id_user')->select('reg_cars.*', 'users.id_user', 'users.id_address')->join("addresses","addresses.id_address", "=", "users.id_address" )->orderBy($request->input('sortBy') ?? 'reg_cars.id_reg_car', $request->input('direction') ?? 'desc');
+        ->join('users', 'users.id_user', '=', 'reg_cars.id_user')->select('reg_cars.*', 'users.id_user', 'users.id_address', 'users.name', 'users.surname', 'users.patronymic')->join("addresses","addresses.id_address", "=", "users.id_address" )->orderBy($request->input('sortBy') ?? 'reg_cars.id_reg_car', $request->input('direction') ?? 'desc');
 
         // $paginate = DB::table('reg_cars')
         // ->join('addresses', 'addresses.id_address', '=', 'users.id_address')
@@ -62,6 +62,13 @@ class RegCarsController extends Controller
      */
     public function store(RegCarsRequestCreate $request)
     {
+
+        $fio_user = trim($request->input("fio_user"));
+        $fio_user = explode(" ", $fio_user);
+        $user = User::query()->where("surname", $fio_user[0])->where("name", $fio_user[1])->where("patronymic", $fio_user[2])->first();
+
+        if($user == null) response()->json(['message' => 'Error. User not found.'], 500);
+
         date_default_timezone_set("Europe/Moscow");
         $RegCars = RegCars::make(
             $request->getNumCar(),
@@ -71,7 +78,7 @@ class RegCarsController extends Controller
             date('Y-m-d H:i:s'),
             $request->getComment(),
             $request->getApproved(),
-            User::getById($request->input("id_user"))
+            $user
         );
         $RegCars->save();
         
@@ -118,7 +125,15 @@ class RegCarsController extends Controller
 
         $RegCars->save();
 
-        $user = User::getById($RegCars->getIdUser());
+        $fio_user = trim($request->input("fio_user"));
+        $fio_user = explode(" ", $fio_user);
+        $user = User::query()->where("surname", $fio_user[0])->where("name", $fio_user[1])->where("patronymic", $fio_user[2])->first();
+
+        $RegCars->setIdUser($user->getIdUser());
+
+        $RegCars->save();
+
+        if($user == null) response()->json(['message' => 'Error. User not found.'], 500);
         
         $message = "";
         if($request->getApproved() == 1)

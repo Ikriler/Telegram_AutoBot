@@ -413,3 +413,6 @@ tr:hover{
     font-size:18px;
 }
 
+ul[id^="ui-id-"] {
+    z-index: 10000;
+}

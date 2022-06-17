@@ -8,7 +8,10 @@
         <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
         <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+        <script src="js/jquery.ui.autocomplete.scroll.min.js" type="text/javascript"></script>
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
         <meta name="csrf-token" content="{{ csrf_token() }}">
     </head>
 
@@ -88,11 +91,11 @@
                 <div class="form-group-2">
                 <label for="approved">Одобрение</label>
                 <input type="text" class="form-control" id="approved" name="approved" value="0" disabled>
-            </div>
-            <div class="form-group-2">
-                <label for="id_userC">ID пользователя</label>
-                <input type="text" class="form-control" id="id_userC" name="id_userC"  value="">
-            </div>
+                </div>
+                <div class="form-group-2">
+                    <label for="fio_userC">ФИО пользователя</label>
+                    <input type="text" class="form-control" id="fio_userC" name="fio_userC"  value="">
+                </div>
                 <div class="form-group">
                 <label for="ownerC">Принадлежность</label>
                     <select class="form-control"  id="ownerC" name="owner">
@@ -130,6 +133,10 @@
                 <input type="text" class="form-control" id="comment" name="comment"  value="">
             </div>
             <div class="form-group">
+                <label for="fio_user">ФИО пользователя</label>
+                <input type="text" class="form-control" id="fio_user" name="fio_user"  value="">
+            </div>
+            <div class="form-group">
             <label for="ownerC">Принадлежность</label>
                 <select class="form-control"  id="ownerC" name="owner">
                     <option value="1">Личная</option>
@@ -142,6 +149,27 @@
 
 
         <script type="text/javascript">
+
+        usersSelectList = function(id) {
+            var xhr = new XMLHttpRequest()
+            xhr.open('GET', 'users/index', true)
+            xhr.send()
+            var FIOs = [];
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState != 4) {
+                    return
+                }
+                var usersData = JSON.parse(xhr.responseText).records   
+                usersData.forEach(element => {
+                FIOs.push(element.surname + " " + element.name + " " + element.patronymic);
+                });
+            }
+            $("#" + id).autocomplete({
+                maxShowItems: 5,
+                source: FIOs
+            });
+        };
+
         $.ajaxSetup({
                 headers : {
                     'X-CSRF-Token' : "{{ csrf_token() }}"
@@ -155,7 +183,7 @@
                 add_info: $('#add_infoC').val(),
                 comment: $('#commentC').val(),
                 approved: $('#approved').val(),
-                id_user: $('#id_userC').val(),
+                fio_user: $('#fio_userC').val(),
                 owner: $('#ownerC').val()                
             };
             $.ajax({ url: '/reg_cars/create', data: record , method: 'POST' })
@@ -252,13 +280,14 @@
 
             var grid, dialog;
         function Chg(e) {
-       
+            usersSelectList("fio_user");
            $('#id_reg_car').val(e.data.record.id_reg_car);
             $('#num_car').val(e.data.record.num_car);
             $('#model').val(e.data.record.model);
             $('#add_info').val(e.data.record.add_info);
             $('#comment').val(e.data.record.comment);
             $('#ownerC').val(e.data.record.owner);
+            $('#fio_user').val(e.data.record.surname + " " + e.data.record.name + " " + e.data.record.patronymic);
             dialog.open('Изменение данных о машине');
         }
 
@@ -269,6 +298,7 @@
                 model: $('#model').val(),
                 add_info: $('#add_info').val(),
                 comment: $('#comment').val(),
+                fio_user: $('#fio_user').val(),
                 owner: $('#ownerC').val()
             };
             $.ajax({ url: '/reg_cars/update', data: record , method: 'POST' })
@@ -346,6 +376,9 @@
                     { field: 'add_info', title: 'Адрес', sortable: true},
                     { field: 'id_reg_car', title: 'id машины', hidden: true},
                     { field: 'id_user', title: 'id пользователя', hidden: true},
+                    { field: 'name', title: 'id машины', hidden: true},
+                    { field: 'surname', title: 'id пользователя', hidden: true},
+                    { field: 'patronymic', title: 'id машины', hidden: true},
                     { field: 'owner',
                     renderer: (value) => {
                         switch (value) {
@@ -397,6 +430,7 @@
                 width:'720'
             });
             $('#btnAdd').on('click', function () {
+                usersSelectList("fio_userC");
                 $('#nameC').val('');
                 $('#surnameC').val('');
                 $('#patronymicC').val('');

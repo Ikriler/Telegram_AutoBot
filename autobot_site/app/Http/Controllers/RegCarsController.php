@@ -127,6 +127,10 @@ class RegCarsController extends Controller
 
         $fio_user = trim($request->input("fio_user"));
         $fio_user = explode(" ", $fio_user);
+        if($request->input("id_user") != "") {
+            $user = User::getById($request->input("id_user"));
+        }
+        else
         $user = User::query()->where("surname", $fio_user[0])->where("name", $fio_user[1])->where("patronymic", $fio_user[2])->first();
 
         $RegCars->setIdUser($user->getIdUser());

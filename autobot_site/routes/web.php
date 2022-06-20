@@ -41,6 +41,10 @@ Route::get('users/testData', [UserController::class, 'addFiveRandomUsers'])->mid
 Route::get('users/getCount', [UserController::class, 'getUsersCount'])->middleware('role');
 Route::get('reg_cars/getCount', [RegCarsController::class, 'getCarsCount'])->middleware('role');
 
+
+Route::post("reg_cars/sendMessage", [RegCarsController::class, "sendMessage"])->middleware("role");
+
+
 Route::get('usersList', function() {
     return view("usersList");
 })->name("usersList")->middleware('role');

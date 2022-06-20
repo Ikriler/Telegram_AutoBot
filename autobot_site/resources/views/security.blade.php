@@ -147,6 +147,24 @@
             <button type="button" id="btnCancel" class="btn btn-default">Отменить</button>
         </form>
 
+        <div id="sendMessageDialog" style="display: none">
+            <form>
+                <div>
+                    <input type="text" class="form-control" id="send-id_user" name="id_user" value="" disabled>
+                </div>
+                <div class="form-group">
+                    <label for="fio_user">ФИО пользователя</label>
+                    <input type="text" class="form-control" id="send-fio_user" name="fio_user"  value="">
+                </div>
+                <div class="form-group">
+                    <label for="text_message">Текст сообщения</label>
+                    <textarea id="text_message" name="text_message"></textarea>
+                </div>
+                    <button type="button" id="btnSendMessage" class="btn btn-default">Отправить</button>
+                <button type="button" id="btnSendMessageCancel" class="btn btn-default">Отменить</button>
+                </div>              
+            </form>
+        </div>
 
         <script type="text/javascript">
 
@@ -276,9 +294,36 @@
                         });
                 }
             }
+            $('#btnSendMessage').on('click', SendMessage);
+        $('#btnSendMessageCancel').on('click', function () {
+            sendMessageDialog.close();
+        });
 
+        function SendMessage(e){
+                $.ajaxSetup({
+                    headers : {
+                        'X-CSRF-Token' : "{{ csrf_token() }}"
+                    }
+                });
+                if (confirm('Вы уверены?__')) {
+                    var record = {
+                        id_user: $("#send-id_user").val(),
+                        message: $("#text_message").val()
+                    };
+                    $.ajax({ url: '/reg_cars/sendMessage', data: record, method: 'POST' })  
+                    .done(function () {
+                        alert('Отправлено.');
+                        grid.reload();
+                    })
+                    .fail(function () {
+                        alert('Ошибка отправки.');
+                    });
+                }
+            }
 
-            var grid, dialog;
+            
+
+            var grid, dialog, sendMessageDialog;
         function Chg(e) {
             usersSelectList("fio_user");
            $('#id_reg_car').val(e.data.record.id_reg_car);
@@ -408,7 +453,8 @@
                     { title: '', field: '', width: 35, type: 'icon', icon: 'glyphicon-plus', tooltip: 'Одобрить', events: { 'click': Dob} },
                     { title: '', field: '', width: 35, type: 'icon', icon: 'glyphicon-minus', tooltip: 'Отклонить', events: { 'click': Del } },
                     { title: '', field: '', width: 35, type: 'icon', icon: 'glyphicon-remove', tooltip: 'Удалить', events: { 'click': Deleete } },
-                    { title: '', field: '', width: 35, type: 'icon', icon: 'glyphicon-pencil', tooltip: 'Изменить', events: { 'click': Chg} }
+                    { title: '', field: '', width: 35, type: 'icon', icon: 'glyphicon-pencil', tooltip: 'Изменить', events: { 'click': Chg} },
+                    { title: '', field: '', width: 35, type: 'icon', icon: 'glyphicon-pencil', tooltip: 'Отправить сообщение', events: {'click': openSendMessageDialog}}
                   
                 ],
                 dataSource: '/reg_cars/',
@@ -429,6 +475,19 @@
                 modal: true,
                 width:'720'
             });
+            sendMessageDialog = $("#sendMessageDialog").dialog({
+                uiLibrary: 'bootstrap',
+                autoOpen: false,
+                resizable: true,
+                modal: true,
+                width:'720'
+            });
+
+            function openSendMessageDialog(e) {
+                $("#send-id_user").val(e.data.record.id_user);
+                $('#send-fio_user').val(e.data.record.surname + " " + e.data.record.name + " " + e.data.record.patronymic);
+                sendMessageDialog.open();
+            }
             $('#btnAdd').on('click', function () {
                 usersSelectList("fio_userC");
                 $('#nameC').val('');

@@ -53,6 +53,19 @@ class RegCarsController extends Controller
 
         return response()->json(['message' => 'success', 'records' => $paginate->items(), 'total' => $paginate->total()], 200);
     }
+
+    public function sendMessage(Request $request) {
+        $message = $request->input("message");
+        $id_user = $request->input("id_user");
+
+        if($message == "" || $id_user == "") {
+            return response()->json(["message" => "error"], 500);
+        }
+
+        $user = User::getById($id_user);
+        $user->sendMessage($message);
+        return response()->json(["message" => "success"], 200);
+    }
     
     /**
      * Store a newly created resource in storage.

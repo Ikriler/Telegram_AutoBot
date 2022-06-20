@@ -426,3 +426,13 @@ tr:hover{
 ul[id^="ui-id-"] {
     z-index: 10000;
 }
+
+#sendMessageDialog{
+    background: #2b5378b9;
+    color:#FFFFFF;
+}
+
+#sendMessageDialog button{
+    background: #2b5378b9;
+    color:#FFFFFF;
+}

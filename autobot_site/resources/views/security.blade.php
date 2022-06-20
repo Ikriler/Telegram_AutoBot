@@ -454,7 +454,7 @@
                     { title: '', field: '', width: 35, type: 'icon', icon: 'glyphicon-minus', tooltip: 'Отклонить', events: { 'click': Del } },
                     { title: '', field: '', width: 35, type: 'icon', icon: 'glyphicon-remove', tooltip: 'Удалить', events: { 'click': Deleete } },
                     { title: '', field: '', width: 35, type: 'icon', icon: 'glyphicon-pencil', tooltip: 'Изменить', events: { 'click': Chg} },
-                    { title: '', field: '', width: 35, type: 'icon', icon: 'glyphicon-pencil', tooltip: 'Отправить сообщение', events: {'click': openSendMessageDialog}}
+                    { title: '', field: '', width: 35, type: 'icon', icon: 'glyphicon-envelope', tooltip: 'Отправить сообщение', events: {'click': openSendMessageDialog}}
                   
                 ],
                 dataSource: '/reg_cars/',

@@ -37,6 +37,12 @@ class UserController extends Controller
         if(!empty($request->input("email"))) {
             $paginate = $paginate->where("email", "like", '%' . $request->input("email") . '%');
         }
+        if(!empty($request->input("surname"))) {
+            $paginate = $paginate->where("surname", "like", '%' . $request->input("surname") . '%');
+        }
+        if(!empty($request->input("patronymic"))) {
+            $paginate = $paginate->where("patronymic", "like", '%' . $request->input("patronymic") . '%');
+        }
         if($request->input("approved") != "") {
             $paginate = $paginate->where("approved", "like", '%' . $request->input("approved") . '%');
         }

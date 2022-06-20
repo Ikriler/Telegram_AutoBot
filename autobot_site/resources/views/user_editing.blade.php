@@ -37,12 +37,12 @@
                 <form class="form-inline">
                     <div class="form-group">
                         <input id="txtName" type="text" placeholder="Имя" class="form-control" />
-                        <!-- <input id="txtSurname" type="text" placeholder="Surname" class="form-control" />
-                        <input id="txtPatronymic" type="text" placeholder="Patronymic" class="form-control" />
-                        <input id="txtPhone_number" type="text" placeholder="Phone number" class="form-control" />
+                        <input id="txtSurname" type="text" placeholder="Фамилия" class="form-control" />
+                        <input id="txtPatronymic" type="text" placeholder="Отчество" class="form-control" />
+                        <!-- <input id="txtPhone_number" type="text" placeholder="Phone number" class="form-control" />
                         <input id="txtTelegram_id" type="text" placeholder="Telegram ID" class="form-control" />
                         <input id="txtApproved" type="text" placeholder="Approved" class="form-control" /> -->
-                        <input id="txtEmail" type="text" placeholder="Почта" class="form-control" />
+                        <!--<input id="txtEmail" type="text" placeholder="Почта" class="form-control" /> -->
                         <!-- <input id="txtPassword" type="text" placeholder="Password" class="form-control" />
                         <input id="txtRole" type="text" placeholder="Role" class="form-control" /> -->
                     </div>

@@ -88,10 +88,10 @@
                     <label for="commentC">Коментарий</label>
                     <input type="text" class="form-control" id="commentC" name="comment"  value="">
                 </div>
-                <div class="form-group-2">
+                <!-- <div class="form-group-2">
                 <label for="approved">Одобрение</label>
                 <input type="text" class="form-control" id="approved" name="approved" value="0" disabled>
-                </div>
+                </div> -->
                 <div class="form-group-2">
                     <label for="fio_userC">ФИО пользователя</label>
                     <input type="text" class="form-control" id="fio_userC" name="fio_userC"  value="">
@@ -200,7 +200,7 @@
                 model: $('#modelC').val(),
                 add_info: $('#add_infoC').val(),
                 comment: $('#commentC').val(),
-                approved: $('#approved').val(),
+                approved: 0,
                 fio_user: $('#fio_userC').val(),
                 owner: $('#ownerC').val()                
             };

@@ -94,11 +94,11 @@
                 <input type="text" class="form-control" id="telegram_idC">
             </div>
             <div class="form-group2">
-            <label for="role">Одобрение</label>
+            <!-- <label for="role">Одобрение</label>
                     <select class="form-control" name="approved" id="approvedC">
                         <option value="0">Ожидает</option>
                     </select>
-            </div>
+            </div> -->
 
             <div class="form-group2">
                 <label for="email">Почта</label>
@@ -149,10 +149,10 @@
                 <label for="telegram_id">Телеграм</label>
                 <input type="text" class="form-control" id="telegram_id">
             </div>
-            <div class="form-group2">
+            <!-- <div class="form-group2">
                 <label for="approved">Одобрение</label>
                 <input type="text" class="form-control" id="approved" name="approved" value="0" disabled>
-            </div>
+            </div> -->
             <div class="form-group2">
                 <label for="email">Почта</label>
                 <input type="text" class="form-control" id="email" />
@@ -212,7 +212,7 @@
                 phone_number: $('#phone_numberC').val(),
                 address: $('#addressC').val(),
                 telegram_id: $('#telegram_idC').val(),
-                approved: $('#approvedC').val(),
+                approved: 0,
                 id_role: $('#roleC').val()
             };
             $.ajax({ url: '/users/create', data: record , method: 'POST' })
@@ -236,7 +236,7 @@
                 phone_number: $('#phone_number').val(),
                 address: $('#address').val(),
                 telegram_id: $('#telegram_id').val(),
-                approved: $('#approved').val(),
+                approved: 0,
                 id_role: $('#role').val()
             };
             $.ajax({ url: '/users/update', data: record , method: 'POST' })

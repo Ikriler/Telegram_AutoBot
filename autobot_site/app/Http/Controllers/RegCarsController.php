@@ -27,7 +27,7 @@ class RegCarsController extends Controller
         //$paginate = RegCars::with('user')->get()->orderBy($request->input('sortBy') ?? 'reg_cars.id_reg_car', $request->input('direction') ?? 'desc');;
 
         $paginate = DB::table('reg_cars')
-        ->join('users', 'users.id_user', '=', 'reg_cars.id_user')->select('reg_cars.*', 'users.id_user', 'users.id_address', 'users.name', 'users.surname', 'users.patronymic')->join("addresses","addresses.id_address", "=", "users.id_address" )->orderBy($request->input('sortBy') ?? 'reg_cars.id_reg_car', $request->input('direction') ?? 'desc');
+        ->join('users', 'users.id_user', '=', 'reg_cars.id_user')->select('reg_cars.*', 'users.id_user', 'users.id_address', 'users.name', 'users.surname', 'users.patronymic')->join("addresses","addresses.id_address", "=", "users.id_address" )->orderBy($request->input('sortBy') ?? 'reg_cars.approved', $request->input('direction') ?? 'asc');
 
         // $paginate = DB::table('reg_cars')
         // ->join('addresses', 'addresses.id_address', '=', 'users.id_address')
@@ -52,19 +52,6 @@ class RegCarsController extends Controller
         // $paginate = RegCars::query()->paginate($request->input('limit'));
 
         return response()->json(['message' => 'success', 'records' => $paginate->items(), 'total' => $paginate->total()], 200);
-    }
-
-    public function sendMessage(Request $request) {
-        $message = $request->input("message");
-        $id_user = $request->input("id_user");
-
-        if($message == "" || $id_user == "") {
-            return response()->json(["message" => "error"], 500);
-        }
-
-        $user = User::getById($id_user);
-        $user->sendMessage($message);
-        return response()->json(["message" => "success"], 200);
     }
     
     /**

@@ -422,7 +422,12 @@ ul[id^="ui-id-"] {
     color:#FFFFFF;
 }
 
+
 #sendMessageDialog button{
     background: #2b5378b9;
     color:#FFFFFF;
+}
+
+#sendMessageDialog textarea{
+    color:#030303;
 }
